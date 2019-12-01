@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Title -->
+        <title>Medical Institution Guide</title>
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="all">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" media="all">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" media="all">
+
+        <!-- Bootstrap bootstrap-touch-slider Slider Main Style Sheet -->
+        <link href="/static/css/bootstrap-touch-slider.css" rel="stylesheet" media="all">
+    </head>
+    <body>
+        <div id="bootstrap-touch-slider" class="carousel bs-slider fade  control-round indicators-line" data-ride="carousel" data-pause="hover" data-interval="false" >
+            <!-- Wrapper For Slides -->
+            <div class="carousel-inner" role="listbox">
+                <!-- Main Slide -->
+                <div class="item active">
+                    <!-- Slide Background -->
+                    <img src="/static/images/index.jpeg" alt="Bootstrap Touch Slider" class="slide-image"/>
+                    <div class="bs-slider-overlay"></div>
+                    <!-- Slide Text Layer -->
+                    <div class="slide-text slide_style_center">
+                        <h1 data-animation="animated flipInX">Medical Institution Guide</h1>
+                        <p data-animation="animated lightSpeedIn">Please click on the menu.</p>
+                        <a href="/restapi/execute" class="btn btn-default" data-animation="animated fadeInUp">API</a>
+                        <a href="/restapi/reference" class="btn btn-default" data-animation="animated fadeInDown">Reference</a>
+                        <a href="/service" class="btn btn-default" data-animation="animated fadeInUp">Service Page</a>
+                    </div>
+                </div>
+                <!-- End of Slide -->
+            </div><!-- End of Wrapper For Slides -->
+        </div> <!-- End  bootstrap-touch-slider Slider -->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.18/jquery.touchSwipe.min.js"></script>
+
+        <!-- Bootstrap bootstrap-touch-slider Slider Main JS File -->
+        <script src="/static/js/bootstrap-touch-slider.js"></script>
+        <script type="text/javascript">
+            $('#bootstrap-touch-slider').bsTouchSlider();
+        </script>
+    </body>
+</html>
+<!-- End -->
