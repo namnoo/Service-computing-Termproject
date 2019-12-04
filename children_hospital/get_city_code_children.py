@@ -1,21 +1,22 @@
 #-*- coding:utf-8 -*-
 '''전국 지역 코드를 dictionary 형태의 code.txt로 추출하는 python code'''
-
+from ast import literal_eval
 import requests as re
 import xmltodict as xtd
 import json
 import sys
 import io
 
-region = [1100000000,2600000000,2700000000,2800000000,2900000000,3000000000,3100000000,3600000000,4100000000,
-          4200000000,4300000000,4400000000,4500000000,4600000000,4700000000,4800000000,5000000000] 
+with open('state_code_children_hospital.txt','r',encoding='utf-8') as f:
+    state = literal_eval(f.read())
 
 code_dict = {}
 
 #def children_hospital(keywords = None, location = 0):
-def children_hospital():
-  for i in range(len(region)):
-    url = 'https://nip.cdc.go.kr/irapi/rest/getCondSggCd.do?brtcCd={0}&serviceKey=hZ6Exha7XAsIAyIinZz4Vycw8YtH9%2BVoNuCyaxhSW0UX3O8Zp5msTkN3UdHoiyR123LL2qKXHqZcF6WbM2PlJA%3D%3D'.format(region[i])
+def city_code(st_name):
+  for i in range(len(state)):
+    code_dict[st_name] = {}
+    url = 'https://nip.cdc.go.kr/irapi/rest/getCondSggCd.do?brtcCd={0}&serviceKey=hZ6Exha7XAsIAyIinZz4Vycw8YtH9%2BVoNuCyaxhSW0UX3O8Zp5msTkN3UdHoiyR123LL2qKXHqZcF6WbM2PlJA%3D%3D'.format(state[st_name])
     request = re.get(url)
     rescode = request.status_code
 
@@ -37,11 +38,12 @@ def children_hospital():
       for e in range(len(w_data)):
           code = w_data[e]["cd"]
           name = w_data[e]["cdNm"]
-          code_dict[name] = code
-          
-children_hospital()
+          code_dict[st_name][name] = code
+  with open('city_code_children_hospital.txt', 'w', encoding='utf-8') as f:
+      f.write(str(code_dict))
 
-with open('code.txt','w',encoding='utf-8') as f:
-    f.write(str(code_dict))
-    print("open")
+for key in state:
+    city_code(key)
+
+
       
