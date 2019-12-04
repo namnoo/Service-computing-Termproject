@@ -57,7 +57,7 @@ def stateSearch(st_name):
 
 def citySearch(st_name,ct_name):
     url = "https://nip.cdc.go.kr/irapi/rest/getOrgList.do?brtcCd={0}&sggCd={1}&pageNo={2}&numberOfRows=20&searchTpcd=ADDR&serviceKey={3}".format(
-        state[st_name], city[ct_name], 1, keys.CHILDREN_HOSPITAL)
+        state[st_name], city[st_name][ct_name], 1, keys.CHILDREN_HOSPITAL)
     request = re.get(url)
     rescode = request.status_code
 
@@ -71,7 +71,7 @@ def citySearch(st_name,ct_name):
 
     for l in range(1, maxPage):
         url = "https://nip.cdc.go.kr/irapi/rest/getOrgList.do?brtcCd={0}&sggCd={1}&pageNo={2}&numberOfRows=20&searchTpcd=ADDR&serviceKey={3}".format(
-            state[st_name],city[ct_name],l, keys.CHILDREN_HOSPITAL)
+            state[st_name],city[st_name][ct_name],l, keys.CHILDREN_HOSPITAL)
         request = re.get(url)
         rescode = request.status_code
 
