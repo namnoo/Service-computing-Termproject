@@ -79,7 +79,7 @@ def citySearch(st_name,ct_name):
          url = "http://openapi1.nhis.or.kr/openapi/service/rest/HmcSearchService/getHmcList?pageNo={0}&siDoCd={1}&siGunGuCd={2}&ServiceKey={3}".format(l,state[st_name],city[st_name][ct_name],keys.MEDICAL_EXAMINATION)
          request = re.get(url)
          rescode = request.status_code
-         print(url)
+
          if (rescode == 200):  # 제대로 데이터가 수신됐는지 확인하는 코드 성공시 200
             responseData = request.text
             rD = xtd.parse(responseData)  # XML형식의 데이터를 dict형식으로 변환시켜줌
@@ -107,11 +107,14 @@ def citySearch(st_name,ct_name):
             print()
 
 #전국 시/도 별 검색
-for key in state:
-    stateSearch(key)
+#for key in state:
+    #stateSearch(key)
 
 #전국 구 별 검색
-for key in state:
-    for key2 in city:
-        citySearch(key,key2)
+# for key in state:
+#     for key2 in city:
+        #citySearch(key,key2)
+
+citySearch('경상남도','합천군')
+
 
