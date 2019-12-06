@@ -19,6 +19,13 @@
   <!-- Custom styles for this template -->
   <link href="/static/css/clean-blog.min.css" rel="stylesheet">
 
+  {% block script %} {% endblock %}
+
+  <style>
+    .container {
+      font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+  </style>
 </head>
 
 <body>
@@ -34,10 +41,10 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/restapi/execute">API</a>
+            <a class="nav-link" href="/api/execute">API</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/restapi/reference">Reference</a>
+            <a class="nav-link" href="/api/reference">Reference</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/service">Service</a>
