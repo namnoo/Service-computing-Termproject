@@ -1,11 +1,11 @@
 #-*- coding:utf-8 -*-
-import requests as re
-import xmltodict as xtd
-import keys
 import json
 from ast import literal_eval
-import sys
-import io
+
+import requests as re
+import xmltodict as xtd
+
+import keys
 
 with open('state_code_medical_examination.txt','r',encoding='utf-8') as f:
     state = literal_eval(f.read())
