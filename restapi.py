@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-restapi_blueprint = Blueprint('restapi', __name__)
+restapi_blueprint = Blueprint('api', __name__)
 
 
 @restapi_blueprint.route('/execute')

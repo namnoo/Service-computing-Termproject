@@ -4,54 +4,94 @@
 
 {% block content %}
 <div class="container">
+
     <!-- 체크박스 -->
     <div class="row">
-        <div class="check">
-            <input type="checkbox" name="check_hospital" value="hospital">병·의원
-            <input type="checkbox" name="check_health" value="health">검진기관
-            <input type="checkbox" name="check_vaccination" value="vaccination">어린이 예방접종기관
-            <input type="checkbox" name="check_pharmacy" value="pharmacy">약국
-            <input type="checkbox" name="check_medication" value="medication">안전상비의약품 판매업소
+        <div class="media col-lg-12 col-md-12 mx-auto">
+            <div class="media-body">
+                <input type="checkbox" name="check_hospital" value="hospital">병·의원
+                <input type="checkbox" name="check_health" value="health">검진기관
+                <input type="checkbox" name="check_vaccination" value="vaccination">어린이 예방접종기관
+                <input type="checkbox" name="check_pharmacy" value="pharmacy">약국
+                <input type="checkbox" name="check_medication" value="medication">안전상비의약품 판매업소
+            </div>
+            <a class="btn btn-success float-right" href="">검색</a>
         </div>
     </div>
+
     <!-- 시/도 리스트, 구 리스트 -->
     <div class="row">
-        <div class="dropdown">
-
-            <select id="sido" name="sido" onchange="changeSido()">
+        <div class="dropdown col-lg-12 col-md-12 mx-auto">
+            <!-- 1차 분류 -->
+            <select id="sido" name="sido" onchange="changeSido()" style="width:10rem; height:2rem;">
                 <option value="" selected disabled>1차 분류</option>
                 {% for item in sido %}
                     {% for key, value in item.items() %}
-                    <option id="selected" value="{{key}}">{{key}}</option>
+                    <option id="key" value="{{key}}">{{key}}</option>
                     {% endfor %}
                 {% endfor %}
             </select>
-
-            <select id="gu" name="gu" onchange="changeGu()">
+            <!-- 2차 분류 -->
+            <select id="gu" name="gu" style="width:10rem; height:2rem;">
                 <option value="" selected disabled>2차 분류</option>
-                {% for item in sido %}
-                    {% for key, value in item.items() %}
-                        {% for v in value %}
-                        <option value="{{v}}">{{v}}</option>
-                        {% endfor %}
-                    {% endfor %}
-                {% endfor %}
+            </select>
+            <!-- 검진과목 -->
+            <select id="subject" name="subject" style="width:10rem; height:2rem;">
+                <option value="" selected disabled>검진 과목</option>
+                <option value="subject">검진과목이 너무 많아요</option>
             </select>
         </div>
-        <!-- 결과 화면 -->
-        <div class="answer">
+    </div>
 
+    <hr>
+
+    <!-- 결과 화면 -->
+    <div class="row">
+        <div class="answer col-lg-12 col-md-12 mx-auto">
+            <table class="table table-success">
+                <thead class="text-center">
+                    <tr>
+                        <th scope="col">상호명</th>
+                        <th scope="col">과목</th>
+                        <th scope="col">주소</th>
+                        <th scope="col">전화번호</th>
+                        <th scope="col">지도</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+{% endblock %}
 
+{% block script %}
 <script>
     function changeSido() {
         var sidoSelect = document.getElementById("sido");
-
         var selectSido = sidoSelect.options[sidoSelect.selectedIndex].text;
-        alert(selectSido);
 
+        {% for item in sido %}
+            {% for key, value in item.items() %}
+                if ('{{key}}' == selectSido) {
+                    $("#gu").empty();
+                    $("#gu").append("<option value='' selected disabled>2차 분류</option>");
+
+                    {% for v in value %}
+                        $("#gu").append("<option value='{{v}}'>{{v}}</option>");
+                    {% endfor %}
+                }
+            {% endfor %}
+        {% endfor %}
     }
+
 </script>
 {% endblock %}
