@@ -6,7 +6,31 @@
 <div class="container">
     <div class="row">
         <div class="media col-lg-12 col-md-12 mx-auto">
-            <p class="result"></p>
+            <a class="btn btn-success" href="hospital/서울/종로구">병원</a>
+            <a class="btn btn-success" href="clinic/서울/종로구">의원</a>
+            <a class="btn btn-success" href="/">검진기관</a>
+            <a class="btn btn-success" href="children/서울/종로구">어린이 예방접종기관</a>
+            <a class="btn btn-success" href="pharmacy/서울/종로구">약국</a>
+            <a class="btn btn-success" href="store/서울/종로구">안전상비의약품 판매업소</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="text">
+            {% for h in hospital %}
+                <p style="margin-bottom:0px;">{{h}}</p>
+            {% endfor %}
+            {% for c in clinic %}
+                <p style="margin-bottom:0px;">{{c}}</p>
+            {% endfor %}
+            {% for d in data %}
+                <p style="margin-bottom:0px;">{{d}}</p>
+            {% endfor %}
+            {% for p in pharmacy %}
+                <p style="margin-bottom:0px;">{{p}}</p>
+            {% endfor %}
+            {% for s in store %}
+                <p style="margin-bottom:0px;">{{s}}</p>
+            {% endfor %}
         </div>
     </div>
 </div>
