@@ -3,7 +3,7 @@ from restapi import restapi_blueprint
 import logging, json, pprint
 
 application = Flask(__name__)
-application.register_blueprint(restapi_blueprint, url_prefix="/restapi")
+application.register_blueprint(restapi_blueprint, url_prefix="/api")
 
 
 @application.route('/service')
@@ -29,7 +29,7 @@ def index():
         'index.html'
     )
 
-z
+
 if __name__ == '__main__':
     logging.info("Flask web server started!")
 
