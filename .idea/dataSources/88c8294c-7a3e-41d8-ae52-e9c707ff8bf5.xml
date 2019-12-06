@@ -33,7 +33,6 @@
     </column>
     <index id="13" parent="6" name="ix_pharmacy_no">
       <ColNames>no</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <column id="14" parent="7" name="type">
       <Position>1</Position>
@@ -73,7 +72,6 @@
     </column>
     <index id="23" parent="8" name="ix_store_no">
       <ColNames>no</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
   </database-model>
 </dataSource>

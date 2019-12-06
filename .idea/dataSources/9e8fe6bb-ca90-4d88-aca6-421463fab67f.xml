@@ -94,7 +94,6 @@
     </column>
     <index id="28" parent="7" name="ix_hospital_no">
       <ColNames>no</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <column id="29" parent="8" name="type">
       <Position>1</Position>

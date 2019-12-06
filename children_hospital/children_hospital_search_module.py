@@ -8,10 +8,10 @@ import sys
 import io
 
 
-with open('state_code_children_hospital.txt','r',encoding='utf-8') as f:
+with open('children_hospital/state_code_children_hospital.txt','r',encoding='utf-8') as f:
     state = literal_eval(f.read())
 
-with open('city_code_children_hospital.txt','r',encoding='utf-8') as f:
+with open('children_hospital/city_code_children_hospital.txt','r',encoding='utf-8') as f:
     city = literal_eval(f.read())
 
 def stateSearch(st_name):
@@ -48,11 +48,11 @@ def stateSearch(st_name):
                 temp.append(w_data)
                 w_data = temp
 
-            for e in range(len(w_data)):
-                print()
-                print('검진기관 :', w_data[e]["orgnm"])
-                print('주소 :', w_data[e]["orgAddr"])
-                print('전화번호 :', w_data[e]["orgTlno"])
+            # for e in range(len(w_data)):
+            #     print()
+            #     print('검진기관 :', w_data[e]["orgnm"])
+            #     print('주소 :', w_data[e]["orgAddr"])
+            #     print('전화번호 :', w_data[e]["orgTlno"])
             print()
 
 def citySearch(st_name,ct_name):
@@ -97,7 +97,10 @@ def citySearch(st_name,ct_name):
                 print('전화번호 :', w_data[e]["orgTlno"])
             print()
 
+    return w_data
+'''
 print('='*10,'state','='*10)
 stateSearch('제주특별자치도')
 print('='*10,'city','='*10)
 citySearch('서울','종로구')
+'''
