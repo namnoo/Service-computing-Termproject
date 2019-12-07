@@ -7,12 +7,19 @@ import xmltodict as xtd
 
 import keys
 
+with open('medical_examination/state_code_medical_examination.txt','r',encoding='utf-8') as f:
+    state = literal_eval(f.read())
+
+with open('medical_examination/city_code_medical_examination.txt','r',encoding='utf-8') as f:
+    city = literal_eval(f.read())
+'''
+
 with open('state_code_medical_examination.txt','r',encoding='utf-8') as f:
     state = literal_eval(f.read())
 
 with open('city_code_medical_examination.txt','r',encoding='utf-8') as f:
     city = literal_eval(f.read())
-
+'''
 examination_dict={'grenChrgTypeCd':'일반검진','ichkChrgTypeCd':'영유아검진','bcExmdChrgTypeCd':'유방암','ccExmdChrgTypeCd':'대장암','cvxcaExmdChrgTypeCd':'자궁경부암','lvcaExmdChrgTypeCd':'간암','mchkChrgTypeCd':'구강','stmcaExmdChrgTypeCd':'위암'}
 
 def stateSearch(st_name):
@@ -106,6 +113,8 @@ def citySearch(st_name,ct_name):
                 print('주소 :', w_data[e]["locAddr"])
             print()
 
+    return w_data
+
 #전국 시/도 별 검색
 #for key in state:
     #stateSearch(key)
@@ -115,6 +124,6 @@ def citySearch(st_name,ct_name):
 #     for key2 in city:
         #citySearch(key,key2)
 
-citySearch('경상남도','합천군')
+# citySearch('서울','종로구')
 
 

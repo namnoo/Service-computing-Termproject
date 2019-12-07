@@ -3,6 +3,8 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy import create_engine, Unicode
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import json
+import pprint
 
 engine = create_engine('sqlite:///hospital_clinic_Info.db', echo=False, connect_args={'check_same_thread': False})
 Base = declarative_base()
@@ -33,6 +35,22 @@ class hospitalInfo(Base):
             h.medicalCourse
         ))
 
+    def json_all_hospitals(hospital):
+        hospital_dict = {}
+        index = 0
+        for h in hospital:
+            hospital_dict[index] = {'hosnm' : h.hospitalName,
+                             'hosTlno' : h.telNum,
+                             'hosAddr' : h.address,
+                             'hosType' : h.hospitalType,
+                             'hosSubj' : h.medicalCourse}
+            index += 1
+
+        json_hospital = json.dumps(hospital_dict, ensure_ascii=False)
+
+        return json_hospital
+
+
 class clinicInfo(Base):
     __tablename__ = 'clinic'
 
@@ -59,10 +77,26 @@ class clinicInfo(Base):
             c.medicalCourse
         ))
 
+    def json_all_clinics(clinic):
+        clinic_dict = {}
+        index = 0
+        for c in clinic:
+            clinic_dict[index] = {'clinm' : c.clinicName,
+                             'cliTlno' : c.telNum,
+                             'cliAddr' : c.address,
+                             'cliType' : c.clinicType,
+                             'cliSubj' : c.medicalCourse}
+            index += 1
+
+        json_clinic = json.dumps(clinic_dict, ensure_ascii=False)
+
+        return json_clinic
+
 Base.metadata.create_all(engine)
 
 
-file_name = ['hospitalInfo.csv','clinicInfo.csv']
+file_name = ['hospital_clinic_Info/hospitalInfo.csv','hospital_clinic_Info/clinicInfo.csv']
+# file_name = ['hospitalInfo.csv','clinicInfo.csv']
 table_name = [hospitalInfo.__tablename__,clinicInfo.__tablename__]
 for i in range(2):
     anti_read = pd.read_csv(file_name[i])
@@ -80,7 +114,10 @@ def search_hostpital_state(st_name):
 def search_hostpital_city(st_name,ct_name):
     hospital = db_session.query(hospitalInfo).filter(
         hospitalInfo.address.like('%' + st_name + '%' and '%' + ct_name + '%'))
-    hospitalInfo.print_all_hospitals(hospital)
+    # hospitalInfo.print_all_hospitals(hospital)
+
+    return hospitalInfo.json_all_hospitals(hospital)
+
 
 # search_hostpital_state('서울특별시')
 # search_hostpital_city('서울특별시','강남구')
@@ -94,7 +131,9 @@ def search_clinic_state(st_name):
 def search_clinic_city(st_name,ct_name):
     clinic = db_session.query(clinicInfo).filter(
         clinicInfo.address.like('%' + st_name + '%' and '%' + ct_name + '%'))
-    clinicInfo.print_all_clinics(clinic)
+    # clinicInfo.print_all_clinics(clinic)
 
-search_clinic_state('서울특별시')
-search_clinic_city('서울특별시','강남구')
+    return clinicInfo.json_all_clinics(clinic)
+
+# search_clinic_state('서울특별시')
+# search_clinic_city('서울특별시','강남구')
