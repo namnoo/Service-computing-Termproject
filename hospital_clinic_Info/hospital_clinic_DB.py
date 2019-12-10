@@ -4,7 +4,7 @@ from sqlalchemy import create_engine, Unicode
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import json
-import pprint
+from antibiotics_Info import antibiotics_DB
 
 engine = create_engine('sqlite:///hospital_clinic_Info.db', echo=False, connect_args={'check_same_thread': False})
 Base = declarative_base()
@@ -39,11 +39,14 @@ class hospitalInfo(Base):
         hospital_dict = {}
         index = 0
         for h in hospital:
+            anti = antibiotics_DB.search_antibiontics_info(h.hospitalName, h.address)
+
             hospital_dict[index] = {'hosnm' : h.hospitalName,
                              'hosTlno' : h.telNum,
                              'hosAddr' : h.address,
                              'hosType' : h.hospitalType,
-                             'hosSubj' : h.medicalCourse}
+                             'hosSubj' : h.medicalCourse,
+                             'hosAnti' : anti}
             index += 1
 
         json_hospital = json.dumps(hospital_dict, ensure_ascii=False)
@@ -81,11 +84,14 @@ class clinicInfo(Base):
         clinic_dict = {}
         index = 0
         for c in clinic:
+            anti = antibiotics_DB.search_antibiontics_info(c.clinicName, c.address)
+
             clinic_dict[index] = {'clinm' : c.clinicName,
                              'cliTlno' : c.telNum,
                              'cliAddr' : c.address,
                              'cliType' : c.clinicType,
-                             'cliSubj' : c.medicalCourse}
+                             'cliSubj' : c.medicalCourse,
+                             'cliAnti' : anti}
             index += 1
 
         json_clinic = json.dumps(clinic_dict, ensure_ascii=False)
