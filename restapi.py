@@ -3,6 +3,7 @@ from hospital_clinic_Info import hospital_clinic_DB
 from medical_examination import medical_examination_search_module
 from children_hospital import children_hospital_search_module
 from pharmacy_Info import pharmacy_store_DB
+from antibiotics_Info import antibiotics_DB
 
 
 restapi_blueprint = Blueprint('api', __name__)

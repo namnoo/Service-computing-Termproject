@@ -5,34 +5,37 @@
 {% block content %}
 <div class="container">
 
-    <!-- 체크박스 -->
-    <div class="row">
-        <div class="media col-lg-12 col-md-12 mx-auto">
-            <div class="media-body">
-                <input type="checkbox" name="check_hospital" value="hospital">병·의원
-                <input type="checkbox" name="check_health" value="health">검진기관
-                <input type="checkbox" name="check_vaccination" value="vaccination">어린이 예방접종기관
-                <input type="checkbox" name="check_pharmacy" value="pharmacy">약국
-                <input type="checkbox" name="check_medication" value="medication">안전상비의약품 판매업소
+    <form name="category" action="" onSubmit="return selectCategory(this)">
+        <!-- 체크박스 -->
+        <div class="row">
+            <div class="media col-lg-12 col-md-12 mx-auto">
+                <div class="media-body">
+                    <input type="checkbox" name="medical" value="hospital_clinic" onclick="onClickCheckbox(this);">병·의원
+                    <input type="checkbox" name="medical" value="examination" onclick="onClickCheckbox(this);">검진기관
+                    <input type="checkbox" name="medical" value="children" onclick="onClickCheckbox(this);">어린이 예방접종기관
+                    <input type="checkbox" name="medical" value="pharmacy" onclick="onClickCheckbox(this);">약국
+                    <input type="checkbox" name="medical" value="store" onclick="onClickCheckbox(this);">안전상비의약품 판매업소
+                </div>
+                <input type="submit" class="btn btn-success float-right" value="검색"/>
             </div>
-            <a class="btn btn-success float-right" href="">검색</a>
         </div>
-    </div>
+    </form>
 
     <!-- 시/도 리스트, 구 리스트 -->
     <div class="row">
         <div class="dropdown col-lg-12 col-md-12 mx-auto">
             <!-- 1차 분류 -->
-            <select id="sido" name="sido" onchange="changeSido()" style="width:10rem; height:2rem;">
+            <select id="sido" onchange="changeSido()" style="width:10rem; height:2rem;">
                 <option value="" selected disabled>1차 분류</option>
                 {% for item in sido %}
                     {% for key, value in item.items() %}
-                    <option id="key" value="{{key}}">{{key}}</option>
+                        <option id="{{key}}" name="sido" value="{{key}}">{{key}}</option>
                     {% endfor %}
                 {% endfor %}
             </select>
+
             <!-- 2차 분류 -->
-            <select id="gu" name="gu" style="width:10rem; height:2rem;">
+            <select id="gu" style="width:10rem; height:2rem;">
                 <option value="" selected disabled>2차 분류</option>
             </select>
             <!-- 검진과목 -->
@@ -55,6 +58,7 @@
                         <th scope="col">과목</th>
                         <th scope="col">주소</th>
                         <th scope="col">전화번호</th>
+                        <th scope="col">항생제 등급</th>
                         <th scope="col">지도</th>
                     </tr>
                 </thead>
@@ -75,22 +79,75 @@
 
 {% block script %}
 <script>
-    function changeSido() {
-        var sidoSelect = document.getElementById("sido");
-        var selectSido = sidoSelect.options[sidoSelect.selectedIndex].text;
+    function changeSido() { // 1차 분류 선택 -> 2차 분류 option 생성
+        var s = document.getElementById("sido");
+        var selectedSido = s.options[s.selectedIndex].text;
 
         {% for item in sido %}
             {% for key, value in item.items() %}
-                if ('{{key}}' == selectSido) {
+                if ('{{key}}' == selectedSido) {
                     $("#gu").empty();
                     $("#gu").append("<option value='' selected disabled>2차 분류</option>");
 
                     {% for v in value %}
-                        $("#gu").append("<option value='{{v}}'>{{v}}</option>");
+                        $("#gu").append("<option id='{{v}}' name='gu' value='{{v}}'>{{v}}</option>");
                     {% endfor %}
                 }
             {% endfor %}
         {% endfor %}
+    }
+
+    function onClickCheckbox(c) { // checkbox 하나만 선택
+        var obj = document.getElementsByName("medical");
+        for(var i = 0; i < obj.length; i++) {
+            if(obj[i] != c) {
+                obj[i].checked = false;
+            }
+        }
+    }
+
+    function selectCategory() { // checkbox 선택 후 검색 버튼 눌렀을 때 이벤트
+        var isChecked = $("input:checkbox[name='medical']").is(":checked");
+
+        var checkedHospitalClinic = $("input:checkbox[value='hospital_clinic']").is(":checked");
+        var checkedExamination = $("input:checkbox[value='examination']").is(":checked");
+        var checkedChildren = $("input:checkbox[value='children']").is(":checked");
+        var checkedPharmacy = $("input:checkbox[value='pharmacy']").is(":checked");
+        var checkedStore = $("input:checkbox[value='store']").is(":checked");
+
+        var selectedSido = $("#sido").val();
+        var selectedGu = $("#gu").val();
+
+        if(!isChecked){
+            alert("종류를 한 개 이상 선택해주세요.");
+            return false;
+        }
+
+        var checkedBox = $("input:checkbox[name='medical']").val();
+
+
+        if(checkedHospitalClinic) {
+            alert("병의원");
+            alert(selectedSido);
+            alert(selectedGu);
+
+        }
+
+        if(checkedExamination) {
+            alert("검진기관");
+        }
+
+        if(checkedChildren) {
+            alert("어린이 예방접종기관");
+        }
+
+        if(checkedPharmacy) {
+            alert("약국");
+        }
+
+        if(checkedStore) {
+            alert("안전상비의약품 판매업소");
+        }
     }
 
 </script>
