@@ -49,6 +49,9 @@ def state_code():
             for e in range(len(w_data)):
                 code = w_data[e]["siDoCd"]
                 name = w_data[e]["siDoNm"]
+                if '시' in name : name = name[:-1]
+                if '세종' in name : name = '세종'
+                if '제주' in name : name = '제주'
                 state_code_dict[name] = code
     with open('state_code_medical_examination.txt', 'w', encoding='utf-8') as f:
         f.write(str(state_code_dict))
