@@ -15,15 +15,15 @@ def search(keywords = None,location = 0):
   else : cnt = len(region)
   for i in range(cnt):
     url = "https://nip.cdc.go.kr/irapi/rest/getOrgList.do?brtcCd={0}&pageNo={1}&numberOfRows=20&searchTpcd=ADDR&searchWord={2}&serviceKey=hZ6Exha7XAsIAyIinZz4Vycw8YtH9%2BVoNuCyaxhSW0UX3O8Zp5msTkN3UdHoiyR123LL2qKXHqZcF6WbM2PlJA%3D%3D".format(region[i],1,keywords)
-
+    
     request = re.get(url)
 
     rescode = request.status_code
-
+    
     #제대로 데이터가 수신됐는지 확인하는 코드 성공시 200
     if(rescode == 200):
       responseData = request.text
-
+      
       #요청받은 데이터를 읽음
       rD = xmltodict.parse(responseData)
       #XML형식의 데이터를 dict형식으로 변환시켜줌
@@ -43,11 +43,11 @@ def search(keywords = None,location = 0):
       request = re.get(url)
 
       rescode = request.status_code
-
+    
       #제대로 데이터가 수신됐는지 확인하는 코드 성공시 200
       if(rescode == 200):
         responseData = request.text
-
+      
         #요청받은 데이터를 읽음
         rD = xmltodict.parse(responseData)
         #XML형식의 데이터를 dict형식으로 변환시켜줌
@@ -70,7 +70,7 @@ def search(keywords = None,location = 0):
           print('주소 :',w_data[e]["orgAddr"])
           print('전화번호 :',w_data[e]["orgTlno"])
         print()
-
+      
 if __name__ == "__main__":
   while(1):
     print("1. 전국검색 \n2. 시/도별 검색\n3. 나가기\n")
