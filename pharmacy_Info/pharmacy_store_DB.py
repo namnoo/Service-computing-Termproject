@@ -31,14 +31,14 @@ class pharmacyInfo(Base):
         pharmacy_dict = {}
         index = 0
         for p in pharmacy:
-            pharmacy_dict[index] = {'phanm' : p.pharmacyName,
-                             'phaTlno' : p.telNum,
-                             'phaAddr' : p.address}
+            pharmacy_dict[str(index)] = {"phanm" : p.pharmacyName,
+                             "phaTlno" : p.telNum,
+                             "phaAddr" : p.address}
             index += 1
 
-        json_pharmacy = json.dumps(pharmacy_dict, ensure_ascii=False)
+        #json_pharmacy = json.dumps(pharmacy_dict, ensure_ascii=False)
 
-        return json_pharmacy
+        return pharmacy_dict
 
 class storeInfo(Base):
     __tablename__ = 'store'
@@ -63,14 +63,14 @@ class storeInfo(Base):
         store_dict = {}
         index = 0
         for s in store:
-            store_dict[index] = {'stonm' : s.storeName,
-                             'stoTlno' : s.telNum,
-                             'stoAddr' : s.address}
+            store_dict[str(index)] = {"stonm" : s.storeName,
+                             "stoTlno" : s.telNum,
+                             "stoAddr" : s.address}
             index += 1
 
-        json_store = json.dumps(store_dict, ensure_ascii=False)
+        #json_store = json.dumps(store_dict, ensure_ascii=False)
 
-        return json_store
+        return store_dict
 
 Base.metadata.create_all(engine)
 

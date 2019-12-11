@@ -31,14 +31,14 @@ class antibioticsInfo(Base):
         antibiotics_dict = {}
         index = 0
         for a in antibiotics:
-            antibiotics_dict[index] = {'antinm' : a.hospitalName,
-                             'antiTlno' : a.evaluation,
-                             'antiAddr' : a.address}
+            antibiotics_dict[str(index)] = {"antinm" : a.hospitalName,
+                             "antiTlno" : a.evaluation,
+                             "antiAddr" : a.address}
             index += 1
 
-        json_anti = json.dumps(antibiotics_dict, ensure_ascii=False)
+        #json_anti = json.dumps(antibiotics_dict, ensure_ascii=False)
 
-        return json_anti
+        return antibiotics_dict
 
 
 Base.metadata.create_all(engine)

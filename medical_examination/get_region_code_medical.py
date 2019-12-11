@@ -109,10 +109,10 @@ def city_code(st_name):
     print("city code is saved")
 
 
-#시/도 코드 저장
-state_code()
-
-#모든 시/도의 구 코드 저장
-for key in state:
-    city_code(key)
+# #시/도 코드 저장
+# state_code()
+#
+# #모든 시/도의 구 코드 저장
+# for key in state:
+#     city_code(key)
 
