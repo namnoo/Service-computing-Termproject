@@ -27,4 +27,4 @@ if __name__ == '__main__':
     logging.info("Flask web server started!")
 
     application.debug = True
-    application.run(host="localhost", port="8080")
+    application.run(host="0.0.0.0", port="8080")
