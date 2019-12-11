@@ -22,13 +22,7 @@ with open('city_code_medical_examination.txt','r',encoding='utf-8') as f:
 '''
 examination_dict={'grenChrgTypeCd':'일반검진','ichkChrgTypeCd':'영유아검진','bcExmdChrgTypeCd':'유방암','ccExmdChrgTypeCd':'대장암','cvxcaExmdChrgTypeCd':'자궁경부암','lvcaExmdChrgTypeCd':'간암','mchkChrgTypeCd':'구강','stmcaExmdChrgTypeCd':'위암'}
 
-def searchAll():
-    key = []
-    for s in state.keys():
-        key.append(s)
-    for k in key:
-        result = stateSearch(str(k))
-        pprint.pprint(result)
+
 
 def stateSearch(st_name):
     state_dict = {}
@@ -129,6 +123,13 @@ def citySearch(st_name,ct_name):
                 index = index + 1
     return city_dict
 
+def searchAll():
+    key = []
+    for s in state.keys():
+        key.append(s)
+    for k in key:
+        result = stateSearch(str(k))
+        return result
 #전국 시/도 별 검색
 #for key in state:
     #stateSearch(key)

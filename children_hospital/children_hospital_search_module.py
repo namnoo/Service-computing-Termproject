@@ -15,13 +15,7 @@ with open('state_code_children_hospital.txt','r',encoding='utf-8') as f:
 with open('city_code_children_hospital.txt','r',encoding='utf-8') as f:
     city = literal_eval(f.read())
 
-def searchAll():
-    key = []
-    for s in state.keys():
-        key.append(s)
-    for k in key:
-        result = stateSearch(str(k))
-        pprint.pprint(result)
+
 
 def stateSearch(st_name):
     state_dict = {}
@@ -105,6 +99,14 @@ def citySearch(st_name,ct_name):
                 city_dict[str(index)] = {"c_orgnm":w_data[e]["orgnm"], "c_orgAddr":w_data[e]["orgAddr"], "c_orgTlno":w_data[e]["orgTlno"]}
                 index = index+1
     return city_dict
+
+def searchAll():
+    key = []
+    for s in state.keys():
+        key.append(s)
+    for k in key:
+        result = stateSearch(str(k))
+        return result
 '''
 print('='*10,'state','='*10)
 stateSearch('제주특별자치도')
