@@ -1,21 +1,38 @@
 #-*- coding:utf-8 -*-
 import json
 from ast import literal_eval
-
+import pprint
 import requests as re
 import xmltodict as xtd
 
 import keys
+
+with open('medical_examination/state_code_medical_examination.txt','r',encoding='utf-8') as f:
+    state = literal_eval(f.read())
+
+with open('medical_examination/city_code_medical_examination.txt','r',encoding='utf-8') as f:
+    city = literal_eval(f.read())
+'''
 
 with open('state_code_medical_examination.txt','r',encoding='utf-8') as f:
     state = literal_eval(f.read())
 
 with open('city_code_medical_examination.txt','r',encoding='utf-8') as f:
     city = literal_eval(f.read())
-
+'''
 examination_dict={'grenChrgTypeCd':'일반검진','ichkChrgTypeCd':'영유아검진','bcExmdChrgTypeCd':'유방암','ccExmdChrgTypeCd':'대장암','cvxcaExmdChrgTypeCd':'자궁경부암','lvcaExmdChrgTypeCd':'간암','mchkChrgTypeCd':'구강','stmcaExmdChrgTypeCd':'위암'}
 
+def searchAll():
+    key = []
+    for s in state.keys():
+        key.append(s)
+    for k in key:
+        result = stateSearch(str(k))
+        pprint.pprint(result)
+
 def stateSearch(st_name):
+    state_dict = {}
+    index = 0
     url = "http://openapi1.nhis.or.kr/openapi/service/rest/HmcSearchService/getHmcList?siDoCd={0}&ServiceKey={1}".format(state[st_name],
         keys.MEDICAL_EXAMINATION)
     request = re.get(url)
@@ -51,17 +68,22 @@ def stateSearch(st_name):
 
             for e in range(len(w_data)):
                 examination_list = []
-                print()
-                print('상호명 :', w_data[e]["hmcNm"])
                 for key in examination_dict:
                     if w_data[e][key] == '1': examination_list.append(examination_dict[key])
-                print('검진과목 :', examination_list)
-                if "hmcTelNo" in w_data[e]: print('전화번호 :', w_data[e]["hmcTelNo"])
-                else: continue
-                print('주소 :', w_data[e]["locAddr"])
-            print()
+                    examination = ",".join(examination_list)
+                if "hmcTelNo" in w_data[e]:
+                    state_dict[str(index)] = {"orgnm": w_data[e]["hmcNm"], "orgEmn": examination,
+                                             "orgTlno": w_data[e]["hmcTelNo"],
+                                             "orgAddr": w_data[e]["locAddr"]}
+                else:
+                    state_dict[str(index)] = {"orgnm": w_data[e]["hmcNm"], "orgEmn": examination,
+                                             "orgTlno": None, "orgAddr": w_data[e]["locAddr"]}
+                index = index + 1
+    return state_dict
 
 def citySearch(st_name,ct_name):
+    city_dict = {}
+    index = 0
     url = "http://openapi1.nhis.or.kr/openapi/service/rest/HmcSearchService/getHmcList?siDoCd={0}&siGunGuCd={1}&ServiceKey={2}".format(state[st_name],city[st_name][ct_name],keys.MEDICAL_EXAMINATION)
     request = re.get(url)
     rescode = request.status_code
@@ -96,15 +118,16 @@ def citySearch(st_name,ct_name):
 
             for e in range(len(w_data)):
                 examination_list = []
-                print()
-                print('상호명 :', w_data[e]["hmcNm"])
                 for key in examination_dict:
                     if w_data[e][key] == '1': examination_list.append(examination_dict[key])
-                print('검진과목 :', examination_list)
-                if "hmcTelNo" in w_data[e]: print('전화번호 :', w_data[e]["hmcTelNo"])
-                else: continue
-                print('주소 :', w_data[e]["locAddr"])
-            print()
+                    examination = ",".join(examination_list)
+                if "hmcTelNo" in w_data[e]: city_dict[str(index)] = {"orgnm":w_data[e]["hmcNm"],"orgEmn":examination,
+                                                                    "orgTlno":w_data[e]["hmcTelNo"],
+                                                                     "orgAddr":w_data[e]["locAddr"]}
+                else: city_dict[str(index)] = {"orgnm":w_data[e]["hmcNm"],"orgEmn":examination,
+                                                "orgTlno":None, "orgAddr":w_data[e]["locAddr"]}
+                index = index + 1
+    return city_dict
 
 #전국 시/도 별 검색
 #for key in state:
@@ -115,6 +138,6 @@ def citySearch(st_name,ct_name):
 #     for key2 in city:
         #citySearch(key,key2)
 
-citySearch('경상남도','합천군')
-
+# result = citySearch('서울','종로구')
+# pprint.pprint(result)
 

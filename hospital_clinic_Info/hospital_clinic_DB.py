@@ -41,17 +41,17 @@ class hospitalInfo(Base):
         for h in hospital:
             anti = antibiotics_DB.search_antibiontics_info(h.hospitalName, h.address)
 
-            hospital_dict[index] = {'hosnm' : h.hospitalName,
-                             'hosTlno' : h.telNum,
-                             'hosAddr' : h.address,
-                             'hosType' : h.hospitalType,
-                             'hosSubj' : h.medicalCourse,
-                             'hosAnti' : anti}
+            hospital_dict[str(index)] = {"hosnm" : h.hospitalName,
+                             "hosTlno" : h.telNum,
+                             "hosAddr" : h.address,
+                             "hosType" : h.hospitalType,
+                             "hosSubj" : h.medicalCourse,
+                             "hosAnti" : anti}
             index += 1
 
-        json_hospital = json.dumps(hospital_dict, ensure_ascii=False)
+        #json_hospital = json.dumps(hospital_dict, ensure_ascii=False)
 
-        return json_hospital
+        return hospital_dict
 
 
 class clinicInfo(Base):
@@ -86,17 +86,17 @@ class clinicInfo(Base):
         for c in clinic:
             anti = antibiotics_DB.search_antibiontics_info(c.clinicName, c.address)
 
-            clinic_dict[index] = {'clinm' : c.clinicName,
-                             'cliTlno' : c.telNum,
-                             'cliAddr' : c.address,
-                             'cliType' : c.clinicType,
-                             'cliSubj' : c.medicalCourse,
-                             'cliAnti' : anti}
+            clinic_dict[str(index)] = {"clinm" : c.clinicName,
+                             "cliTlno" : c.telNum,
+                             "cliAddr" : c.address,
+                             "cliType" : c.clinicType,
+                             "cliSubj" : c.medicalCourse,
+                             "cliAnti" : anti}
             index += 1
 
-        json_clinic = json.dumps(clinic_dict, ensure_ascii=False)
+        #json_clinic = json.dumps(clinic_dict, ensure_ascii=False)
 
-        return json_clinic
+        return clinic_dict
 
 Base.metadata.create_all(engine)
 
