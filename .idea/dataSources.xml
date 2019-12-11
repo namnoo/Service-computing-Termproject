@@ -69,5 +69,19 @@
         </library>
       </libraries>
     </data-source>
+    <data-source source="LOCAL" name="hospital_clinic_Info [2]" uuid="bfa8e0b0-beb6-429d-a2b5-cd52705511ee">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:D:\Koreatech Assignment\ServiceOrientedComputingIntruduction\Service-oriented-computing-termproject\hospital_clinic_Info.db</jdbc-url>
+      <libraries>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.25.1/license.txt</url>
+        </library>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.25.1/sqlite-jdbc-3.25.1.jar</url>
+        </library>
+      </libraries>
+    </data-source>
   </component>
 </project>

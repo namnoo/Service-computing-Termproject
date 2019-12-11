@@ -4,14 +4,15 @@ import xmltodict as xtd
 import keys
 import json
 from ast import literal_eval
+import pprint
 import sys
 import io
 
 
-with open('children_hospital/state_code_children_hospital.txt','r',encoding='utf-8') as f:
+with open('state_code_children_hospital.txt','r',encoding='utf-8') as f:
     state = literal_eval(f.read())
 
-with open('children_hospital/city_code_children_hospital.txt','r',encoding='utf-8') as f:
+with open('city_code_children_hospital.txt','r',encoding='utf-8') as f:
     city = literal_eval(f.read())
 
 def stateSearch(st_name):
@@ -55,7 +56,10 @@ def stateSearch(st_name):
             #     print('전화번호 :', w_data[e]["orgTlno"])
             print()
 
+
 def citySearch(st_name,ct_name):
+    city_dict = {}
+    index = 0
     url = "https://nip.cdc.go.kr/irapi/rest/getOrgList.do?brtcCd={0}&sggCd={1}&pageNo={2}&numberOfRows=20&searchTpcd=ADDR&serviceKey={3}".format(
         state[st_name], city[st_name][ct_name], 1, keys.CHILDREN_HOSPITAL)
     request = re.get(url)
@@ -83,7 +87,6 @@ def citySearch(st_name,ct_name):
 
             w_data = rDD["response"]["body"]["items"]["item"]  # item에 포함된 data list
             total_count = int(rDD["response"]["body"]["totalCount"])  # 주어진 조건의 total count
-
             temp = []
             # total count가 1일 경우 dictionary를 원소로 가지는 list가 생성 되지 않는 예외 처리
             if total_count == 1:
@@ -91,16 +94,16 @@ def citySearch(st_name,ct_name):
                 w_data = temp
 
             for e in range(len(w_data)):
-                print()
-                print('검진기관 :', w_data[e]["orgnm"])
-                print('주소 :', w_data[e]["orgAddr"])
-                print('전화번호 :', w_data[e]["orgTlno"])
-            print()
-
-    return w_data
+                city_dict[index] = {}
+                city_dict[index] = {"orgnm":w_data[e]["orgnm"], "orgAddr":w_data[e]["orgAddr"], "orgTIno":w_data[e]["orgTlno"]}
+                # print('검진기관 :', w_data[e]["orgnm"])
+                # print('주소 :', w_data[e]["orgAddr"])
+                # print('전화번호 :', w_data[e]["orgTlno"])
+                index = index+1
+    pprint.pprint(city_dict)
+    # return city_dict
 '''
 print('='*10,'state','='*10)
 stateSearch('제주특별자치도')
-print('='*10,'city','='*10)
+print('='*10,'city','='*10)'''
 citySearch('서울','종로구')
-'''
