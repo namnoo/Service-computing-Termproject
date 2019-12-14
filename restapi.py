@@ -76,3 +76,9 @@ def restapi_documentation():
     return render_template(
         'restapi_reference.html'
     )
+
+@restapi_blueprint.route('/reference/getHospitalInfo')
+def documentaion_getHospital():
+    return render_template(
+        'reference_getHospital.html'
+    )

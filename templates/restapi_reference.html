@@ -4,23 +4,48 @@
 
 {% block content %}
 <div class="container">
+    <div style="color: #1c7430; font-size: xx-large"><b>URIs relative to http://localhost:8080/api, unless otherwise noted</b></div>
     <div class="row">
         <div class="answer col-lg-12 col-md-12 mx-auto">
             <table class="table table-success">
                 <thead class="text-center">
                     <tr>
-                        <th scope="col">Parameter</th>
-                        <th scope="col">데이터 타입</th>
-                        <th scope="col">내용</th>
+                        <th scope="col">Method</th>
+                        <th scope="col">HTTP request</th>
+                        <th scope="col">Description</th>
                     </tr>
+
                 </thead>
                 <tbody>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td style = "cursor: pointer; color: #005cbf" onClick= "location.href = 'http://localhost:8080/api/reference/getHospitalInfo'">getHostspitalInfo</td>
+                        <td><b>GET</b> /hospital/state_name/city_name</td>
+                        <td>Get the hospitals information</td>
+                    </tr>
+                    <tr>
+                        <td style = "cursor: pointer; color: #005cbf" onClick= "location.href = 'http://localhost:8080'">getClinicInfo</td>
+                        <td><b>GET</b> /clinc/state_name/city_name</td>
+                        <td>Get the clinics information</td>
+                    </tr>
+                    <tr>
+                        <td style = "cursor: pointer; color: #005cbf" onClick= "location.href = 'http://localhost:8080'">getExaminationInfo</td>
+                        <td><b>GET</b> /examination/state_name/city_name</td>
+                        <td>Get the examination organizations information</td>
+                    </tr>
+                    <tr>
+                        <td style = "cursor: pointer; color: #005cbf" onClick= "location.href = 'http://localhost:8080'">getChindrenInfo</td>
+                        <td><b>GET</b> /children/state_name/city_name</td>
+                        <td>Get the children vaccination organizations information</td>
+                    </tr>
+                    <tr>
+                        <td style = "cursor: pointer; color: #005cbf" onClick= "location.href = 'http://localhost:8080'">getPharmacyInfo</td>
+                        <td><b>GET</b> /pharmacy/state_name/city_name</td>
+                        <td>Get the pharamcies information</td>
+                    </tr>
+                    <tr>
+                        <td style = "cursor: pointer; color: #005cbf" onClick= "location.href = 'http://localhost:8080'">getStoreInfo</td>
+                        <td><b>GET</b> /store/state_name/city_name</td>
+                        <td>Get the stores information</td>
                     </tr>
                 </tbody>
             </table>

@@ -1,0 +1,82 @@
+{% extends 'template.html' %}
+
+{% block head %}API Reference{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-bottom: 50px">
+    <div style="color: #1c7430; font-size: 50px"><b>getHosptialInfo</b></div>
+    <hr size="3px">
+</div>
+
+<div class="container">
+    <div style="color: #494f54; font-size: xx-large"><b>Parameters</b></div>
+    <div class="row" style="margin-bottom: 50px">
+        <div class="answer col-lg-12 col-md-12 mx-auto">
+            <table class="table table-success">
+                <thead class="text-center">
+                    <tr>
+                        <th scope="col">Parameters</th>
+                        <th scope="col">Value</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>state_name</td>
+                        <td>string</td>
+                        <td>haha</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr>
+        <div style="color: #494f54; font-size: xx-large"><b>Response</b></div>
+        <div class="row" style="margin-bottom: 50px">
+        <div class="answer col-lg-12 col-md-12 mx-auto">
+            <table class="table table-success">
+                <thead class="text-center">
+                    <tr>
+                        <th scope="col">Property name</th>
+                        <th scope="col">Value</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>hosnm</td>
+                        <td>string</td>
+                        <td>hospital name</td>
+                    </tr>
+                    <tr>
+                        <td>hosTIno</td>
+                        <td>string</td>
+                        <td>hospital telephone number</td>
+                    </tr>
+                    <tr>
+                        <td>hosAddr</td>
+                        <td>string</td>
+                        <td>hospital address</td>
+                    </tr>
+                    <tr>
+                        <td>hosType</td>
+                        <td>string</td>
+                        <td>hospital type</td>
+                    </tr>
+                    <tr>
+                        <td>hosSubj</td>
+                        <td>string</td>
+                        <td>hospital subect</td>
+                    </tr>
+                    <tr>
+                        <td>hosAnti</td>
+                        <td>string</td>
+                        <td>hospital's antibiotics usage</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr>
+</div>
+{% endblock %}
