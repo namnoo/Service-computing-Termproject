@@ -139,6 +139,6 @@ def searchAll():
 #     for key2 in city:
         #citySearch(key,key2)
 
-# result = citySearch('서울','종로구')
+# result = citySearch('인천시','계양구')
 # pprint.pprint(result)
 

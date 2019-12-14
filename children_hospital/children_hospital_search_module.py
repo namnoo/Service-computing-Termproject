@@ -9,10 +9,10 @@ import sys
 import io
 
 
-with open('state_code_children_hospital.txt','r',encoding='utf-8') as f:
+with open('children_hospital/state_code_children_hospital.txt','r',encoding='utf-8') as f:
     state = literal_eval(f.read())
 
-with open('city_code_children_hospital.txt','r',encoding='utf-8') as f:
+with open('children_hospital/city_code_children_hospital.txt','r',encoding='utf-8') as f:
     city = literal_eval(f.read())
 
 
@@ -66,7 +66,7 @@ def citySearch(st_name,ct_name):
         state[st_name], city[st_name][ct_name], 1, keys.CHILDREN_HOSPITAL)
     request = re.get(url)
     rescode = request.status_code
-
+    print(url)
     if (rescode == 200):  # 제대로 데이터가 수신됐는지 확인하는 코드 성공시 200
         responseData = request.text
         rD = xtd.parse(responseData)  # XML형식의 데이터를 dict형식으로 변환시켜줌
