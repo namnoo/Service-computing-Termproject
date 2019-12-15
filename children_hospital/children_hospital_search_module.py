@@ -68,6 +68,7 @@ def citySearch(st_name,ct_name):
 
     global index
     city_list = []
+    exceptlist = ['전주시 완산구', '전주시 덕진구', '창원시 성산구', '창원시 의창구', '창원시 마산회원구', '창원시 마산합포구']
 
     url = "https://nip.cdc.go.kr/irapi/rest/getOrgList.do?brtcCd={0}&sggCd={1}&pageNo={2}&numberOfRows=20&searchTpcd=ADDR&serviceKey={3}".format(
         state[st_name], city[st_name][ct_name], 1, keys.CHILDREN_HOSPITAL)
@@ -96,7 +97,7 @@ def citySearch(st_name,ct_name):
             state[st_name],city[st_name][ct_name],l, keys.CHILDREN_HOSPITAL)
         request = re.get(url)
         rescode = request.status_code
-        print(url)
+        # print(url)
         if (rescode == 200):  # 제대로 데이터가 수신됐는지 확인하는 코드 성공시 200
             responseData = request.text
             rD = xtd.parse(responseData)  # XML형식의 데이터를 dict형식으로 변환시켜줌
@@ -122,9 +123,19 @@ def citySearch(st_name,ct_name):
                 temp.append(w_data)
                 w_data = temp
             for e in range(len(w_data)):
-                city_list.append({"c_orgnm": w_data[e]["orgnm"],
-                                  "c_orgAddr": w_data[e]["orgAddr"],
-                                  "c_orgTlno": w_data[e]["orgTlno"]})
+                if ct_name in exceptlist:
+                    for i in range(len(exceptlist)):
+                        if ct_name == exceptlist[i]:
+                            if w_data[e]["orgAddr"].find(exceptlist[i]) != -1:
+                                city_list.append({"c_orgnm": w_data[e]["orgnm"],
+                                                  "c_orgAddr": w_data[e]["orgAddr"],
+                                                  "c_orgTlno": w_data[e]["orgTlno"]})
+                            else: break
+
+                else:
+                    city_list.append({"c_orgnm": w_data[e]["orgnm"],
+                                      "c_orgAddr": w_data[e]["orgAddr"],
+                                      "c_orgTlno": w_data[e]["orgTlno"]})
 
             city_dict = {"result":
                              {"type": '어린이 예방접종기관',
@@ -145,6 +156,6 @@ def searchAll():
 print('='*10,'state','='*10)
 stateSearch('제주특별자치도')
 print('='*10,'city','='*10)'''
-result = citySearch('서울','종로구')
-pprint.pprint(result)
+# result = citySearch('경기도','의정부시')
+# pprint.pprint(result)
 #searchAll()
