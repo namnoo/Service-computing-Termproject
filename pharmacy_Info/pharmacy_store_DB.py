@@ -28,17 +28,21 @@ class pharmacyInfo(Base):
         ))
 
     def json_all_pharmacies(pharmacy):
-        pharmacy_dict = {}
-        index = 0
+        pharmacy_list = []
+
         for p in pharmacy:
-            pharmacy_dict[str(index)] = {"phanm" : p.pharmacyName,
-                             "phaTlno" : p.telNum,
-                             "phaAddr" : p.address}
-            index += 1
+            pharmacy_list.append({"phanm" : p.pharmacyName,
+                                  "phaTlno" : p.telNum,
+                                  "phaAddr" : p.address})
 
-        #json_pharmacy = json.dumps(pharmacy_dict, ensure_ascii=False)
+        pharmacy_dict = {"result":
+                             {"type": '약국',
+                              "list": pharmacy_list}
+                         }
 
-        return pharmacy_dict
+        dictToJson = json.dumps(pharmacy_dict, ensure_ascii=False)
+
+        return dictToJson
 
 class storeInfo(Base):
     __tablename__ = 'store'
@@ -60,17 +64,21 @@ class storeInfo(Base):
         ))
 
     def json_all_stores(store):
-        store_dict = {}
-        index = 0
+        store_list = []
+
         for s in store:
-            store_dict[str(index)] = {"stonm" : s.storeName,
-                             "stoTlno" : s.telNum,
-                             "stoAddr" : s.address}
-            index += 1
+            store_list.append({"stonm" : s.storeName,
+                               "stoTlno" : s.telNum,
+                               "stoAddr" : s.address})
 
-        #json_store = json.dumps(store_dict, ensure_ascii=False)
+        store_dict = {"result":
+                          {"type": '안전상비의약품 판매업소',
+                           "list": store_list}
+                      }
 
-        return store_dict
+        dictToJson = json.dumps(store_dict, ensure_ascii=False)
+
+        return dictToJson
 
 Base.metadata.create_all(engine)
 

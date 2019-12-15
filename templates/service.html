@@ -2,6 +2,22 @@
 
 {% block head %}Service{% endblock %}
 
+{% block styleblock %}
+body {
+    font-size: 18px;
+}
+
+.table {
+    table-layout: fixed;
+}
+.table thead th {
+    vertical-align: middle;
+}
+{% endblock %}
+td {
+    font-size: 12px;
+}
+
 {% block content %}
 <div class="container">
 
@@ -9,8 +25,9 @@
         <!-- 체크박스 -->
         <div class="row">
             <div class="media col-lg-12 col-md-12 mx-auto">
-                <div class="media-body">
-                    <input type="checkbox" name="medical" value="hospital_clinic" onclick="onClickCheckbox(this);">병·의원
+                <div id="checkbox-container" class="media-body">
+                    <input type="checkbox" name="medical" value="hospital" onclick="onClickCheckbox(this);">병원
+                    <input type="checkbox" name="medical" value="clinic" onclick="onClickCheckbox(this);">의원
                     <input type="checkbox" name="medical" value="examination" onclick="onClickCheckbox(this);">검진기관
                     <input type="checkbox" name="medical" value="children" onclick="onClickCheckbox(this);">어린이 예방접종기관
                     <input type="checkbox" name="medical" value="pharmacy" onclick="onClickCheckbox(this);">약국
@@ -51,34 +68,30 @@
     <!-- 결과 화면 -->
     <div class="row">
         <div class="answer col-lg-12 col-md-12 mx-auto">
-            <table class="table table-success">
+            <table class="table table-success" id="list_table_json">
                 <thead class="text-center">
                     <tr>
-                        <th scope="col">상호명</th>
-                        <th scope="col">과목</th>
-                        <th scope="col">주소</th>
-                        <th scope="col">전화번호</th>
-                        <th scope="col">항생제 등급</th>
-                        <th scope="col">지도</th>
+                        <th scope="col" width="15%">상호명</th>
+                        <th scope="col" width="15%">과목</th>
+                        <th scope="col" width="15%">전화번호</th>
+                        <th scope="col" width="30%">주소</th>
+                        <th scope="col" width="10%">항생제<br/>등급</th>
+                        <th scope="col" width="10%">지도</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
+    <div id="text"></div>
 </div>
 {% endblock %}
 
 {% block script %}
 <script>
+
+
     function changeSido() { // 1차 분류 선택 -> 2차 분류 option 생성
         var s = document.getElementById("sido");
         var selectedSido = s.options[s.selectedIndex].text;
@@ -109,7 +122,8 @@
     function selectCategory() { // checkbox 선택 후 검색 버튼 눌렀을 때 이벤트
         var isChecked = $("input:checkbox[name='medical']").is(":checked");
 
-        var checkedHospitalClinic = $("input:checkbox[value='hospital_clinic']").is(":checked");
+        var checkedHospital = $("input:checkbox[value='hospital']").is(":checked");
+        var checkedClinic = $("input:checkbox[value='clinic']").is(":checked");
         var checkedExamination = $("input:checkbox[value='examination']").is(":checked");
         var checkedChildren = $("input:checkbox[value='children']").is(":checked");
         var checkedPharmacy = $("input:checkbox[value='pharmacy']").is(":checked");
@@ -119,18 +133,86 @@
         var selectedGu = $("#gu").val();
 
         if(!isChecked){
-            alert("종류를 한 개 이상 선택해주세요.");
+            alert("종류를 한 개 선택해주세요.");
             return false;
         }
 
-        var checkedBox = $("input:checkbox[name='medical']").val();
+        if(checkedHospital) {
+            $.ajax({
+                type: "GET",
+                url: "/api/hospital/" + selectedSido + "/" + selectedGu,
+                dataType: "text",
+                error: function() {
+                    alert("실패");
+                },
+                success: function(text) {
+                    var data = $('#text').html(text);
 
+                    var datatostring = JSON.stringify(data[0].innerText);
+                    var stringtojson = JSON.parse(datatostring);
 
-        if(checkedHospitalClinic) {
-            alert("병의원");
-            alert(selectedSido);
-            alert(selectedGu);
+                    $('#text').remove();
 
+                    if(typeof stringtojson == "string"){
+                        stringtojson = JSON.parse(stringtojson);
+                    }
+                    console.log(stringtojson);
+                    var table = '';
+                    $.each(stringtojson.result.list, function(index, value) {
+                        table += '<tr>';
+                        table += '<td>'+value.hosnm+'</td>';
+                        table += '<td style="font-size: 10px;">'+value.hosSubj+'</td>';
+                        table += '<td>'+value.hosTlno+'</td>';
+                        table += '<td>'+value.hosAddr+'</td>';
+                        if(value.hosAnti == null) table += '<td>'+'</td>';
+                        else table += '<td>'+value.hosAnti+'</td>';
+                        table += '<td>' + '<a href="http://localhost:8080/service/map/'
+                            + value.hosnm + '/' + value.hosAddr + '">이동하기</a>' + '</td>';
+                        table += '</tr>';
+                    });
+                    $("#list_table_json").append(table);
+                }
+            });
+            return false;
+        }
+
+        if(checkedClinic) {
+            $.ajax({
+                type: "GET",
+                url: "/api/clinic/" + selectedSido + "/" + selectedGu,
+                dataType: "text",
+                error: function() {
+                    alert("실패");
+                },
+                success: function(text) {
+                    var data = $('#text').html(text);
+
+                    var datatostring = JSON.stringify(data[0].innerText);
+                    var stringtojson = JSON.parse(datatostring);
+
+                    $('#text').remove();
+
+                    if(typeof stringtojson == "string"){
+                        stringtojson = JSON.parse(stringtojson);
+                    }
+                    console.log(stringtojson);
+                    var table = '';
+                    $.each(stringtojson.result.list, function(index, value) {
+                        table += '<tr>';
+                        table += '<td>'+value.clinm+'</td>';
+                        table += '<td style="font-size: 10px;">'+value.cliSubj+'</td>';
+                        table += '<td>'+value.cliTlno+'</td>';
+                        table += '<td>'+value.cliAddr+'</td>';
+                        if(value.cliAnti == null) table += '<td>'+'</td>';
+                        else table += '<td>'+value.cliAnti+'</td>';
+                        table += '<td>' + '<a href="http://localhost:8080/service/map/'
+                            + value.clinm + '/' + value.cliAddr + '">이동하기</a>' + '</td>';
+                        table += '</tr>';
+                    });
+                    $("#list_table_json").append(table);
+                }
+            });
+            return false;
         }
 
         if(checkedExamination) {
@@ -142,13 +224,82 @@
         }
 
         if(checkedPharmacy) {
-            alert("약국");
+            $.ajax({
+                type: "GET",
+                url: "/api/pharmacy/" + selectedSido + "/" + selectedGu,
+                dataType: "text",
+                error: function() {
+                    alert("실패");
+                },
+                success: function(text) {
+                    var data = $('#text').html(text);
+
+                    var datatostring = JSON.stringify(data[0].innerText);
+                    var stringtojson = JSON.parse(datatostring);
+
+                    $('#text').remove();
+
+                    if(typeof stringtojson == "string"){
+                        stringtojson = JSON.parse(stringtojson);
+                    }
+                    console.log(stringtojson);
+                    var table = '';
+                    $.each(stringtojson.result.list, function(index, value) {
+                        table += '<tr>';
+                        table += '<td>'+value.phanm+'</td>';
+                        table += '<td>'+'</td>';
+                        table += '<td>'+value.phaTlno+'</td>';
+                        table += '<td>'+value.phaAddr+'</td>';
+                        table += '<td>'+'</td>';
+                        table += '<td>' + '<a href="http://localhost:8080/service/map/'
+                            + value.phanm + '/' + value.phaAddr + '">이동하기</a>' + '</td>';
+                        table += '</tr>';
+                    });
+                    $("#list_table_json").append(table);
+                }
+            });
+            return false;
         }
 
         if(checkedStore) {
-            alert("안전상비의약품 판매업소");
+            $.ajax({
+                type: "GET",
+                url: "/api/store/" + selectedSido + "/" + selectedGu,
+                dataType: "text",
+                error: function() {
+                    alert("실패");
+                },
+                success: function(text) {
+                    var data = $('#text').html(text);
+
+                    var datatostring = JSON.stringify(data[0].innerText);
+                    var stringtojson = JSON.parse(datatostring);
+
+                    $('#text').remove();
+
+                    if(typeof stringtojson == "string"){
+                        stringtojson = JSON.parse(stringtojson);
+                    }
+                    console.log(stringtojson);
+                    var table = '';
+                    $.each(stringtojson.result.list, function(index, value) {
+                        table += '<tr>';
+                        table += '<td>'+value.stonm+'</td>';
+                        table += '<td>'+'</td>';
+                        table += '<td>'+value.stoTlno+'</td>';
+                        table += '<td>'+value.stoAddr+'</td>';
+                        table += '<td>'+'</td>';
+                        table += '<td>' + '<a href="http://localhost:8080/service/map/'
+                            + value.stonm + '/' + value.stoAddr + '">이동하기</a>' + '</td>';
+                        table += '</tr>';
+                    });
+                    $("#list_table_json").append(table);
+                }
+            });
+            return false;
         }
     }
+
 
 </script>
 {% endblock %}
