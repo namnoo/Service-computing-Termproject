@@ -36,22 +36,26 @@ class hospitalInfo(Base):
         ))
 
     def json_all_hospitals(hospital):
-        hospital_dict = {}
-        index = 0
+        hospital_list = []
+
         for h in hospital:
             anti = antibiotics_DB.search_antibiontics_info(h.hospitalName, h.address)
 
-            hospital_dict[str(index)] = {"hosnm" : h.hospitalName,
+            hospital_list.append({"hosnm" : h.hospitalName,
                              "hosTlno" : h.telNum,
                              "hosAddr" : h.address,
                              "hosType" : h.hospitalType,
                              "hosSubj" : h.medicalCourse,
-                             "hosAnti" : anti}
-            index += 1
+                             "hosAnti" : anti})
 
-        #json_hospital = json.dumps(hospital_dict, ensure_ascii=False)
+        hospital_dict = {"result":
+                             {"type": "병원",
+                              "list": hospital_list}
+                         }
 
-        return hospital_dict
+        dictToJson = json.dumps(hospital_dict, ensure_ascii=False)
+
+        return dictToJson
 
 
 class clinicInfo(Base):
@@ -81,22 +85,26 @@ class clinicInfo(Base):
         ))
 
     def json_all_clinics(clinic):
-        clinic_dict = {}
-        index = 0
+        clinic_list = []
+
         for c in clinic:
             anti = antibiotics_DB.search_antibiontics_info(c.clinicName, c.address)
 
-            clinic_dict[str(index)] = {"clinm" : c.clinicName,
+            clinic_list.append({"clinm" : c.clinicName,
                              "cliTlno" : c.telNum,
                              "cliAddr" : c.address,
                              "cliType" : c.clinicType,
                              "cliSubj" : c.medicalCourse,
-                             "cliAnti" : anti}
-            index += 1
+                             "cliAnti" : anti})
 
-        #json_clinic = json.dumps(clinic_dict, ensure_ascii=False)
+        clinic_dict = {"result":
+                             {"type": "의원",
+                              "list": clinic_list}
+                         }
 
-        return clinic_dict
+        dictToJson = json.dumps(clinic_dict, ensure_ascii=False)
+
+        return dictToJson
 
 Base.metadata.create_all(engine)
 
