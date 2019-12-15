@@ -9,10 +9,10 @@ import sys
 import io
 
 
-with open('state_code_children_hospital.txt','r',encoding='utf-8') as f:
+with open('children_hospital/state_code_children_hospital.txt','r',encoding='utf-8') as f:
     state = literal_eval(f.read())
 
-with open('city_code_children_hospital.txt','r',encoding='utf-8') as f:
+with open('children_hospital/city_code_children_hospital.txt','r',encoding='utf-8') as f:
     city = literal_eval(f.read())
 
 
