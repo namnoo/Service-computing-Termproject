@@ -25,8 +25,8 @@ examination_dict={'grenChrgTypeCd':'일반검진','ichkChrgTypeCd':'영유아검
 
 
 def stateSearch(st_name):
-    state_dict = {}
-    index = 0
+    state_list = []
+
     url = "http://openapi1.nhis.or.kr/openapi/service/rest/HmcSearchService/getHmcList?siDoCd={0}&ServiceKey={1}".format(state[st_name],
         keys.MEDICAL_EXAMINATION)
     request = re.get(url)
@@ -66,18 +66,25 @@ def stateSearch(st_name):
                     if w_data[e][key] == '1': examination_list.append(examination_dict[key])
                     examination = ",".join(examination_list)
                 if "hmcTelNo" in w_data[e]:
-                    state_dict[str(index)] = {"orgnm": w_data[e]["hmcNm"], "orgEmn": examination,
-                                             "orgTlno": w_data[e]["hmcTelNo"],
-                                             "orgAddr": w_data[e]["locAddr"]}
+                    state_list.append({"orgnm": w_data[e]["hmcNm"],
+                                       "orgEmn": examination,
+                                       "orgTlno": w_data[e]["hmcTelNo"],
+                                       "orgAddr": w_data[e]["locAddr"]})
                 else:
-                    state_dict[str(index)] = {"orgnm": w_data[e]["hmcNm"], "orgEmn": examination,
-                                             "orgTlno": None, "orgAddr": w_data[e]["locAddr"]}
-                index = index + 1
+                    state_list.append({"orgnm": w_data[e]["hmcNm"],
+                                       "orgEmn": examination,
+                                       "orgTlno": None,
+                                       "orgAddr": w_data[e]["locAddr"]})
+
+            state_dict = {"result":
+                              {"type": '검진기관',
+                               "list": state_list}
+                          }
     return state_dict
 
 def citySearch(st_name,ct_name):
-    city_dict = {}
-    index = 0
+    city_list = []
+
     url = "http://openapi1.nhis.or.kr/openapi/service/rest/HmcSearchService/getHmcList?siDoCd={0}&siGunGuCd={1}&ServiceKey={2}".format(state[st_name],city[st_name][ct_name],keys.MEDICAL_EXAMINATION)
     request = re.get(url)
     rescode = request.status_code
@@ -115,13 +122,26 @@ def citySearch(st_name,ct_name):
                 for key in examination_dict:
                     if w_data[e][key] == '1': examination_list.append(examination_dict[key])
                     examination = ",".join(examination_list)
-                if "hmcTelNo" in w_data[e]: city_dict[str(index)] = {"orgnm":w_data[e]["hmcNm"],"orgEmn":examination,
-                                                                    "orgTlno":w_data[e]["hmcTelNo"],
-                                                                     "orgAddr":w_data[e]["locAddr"]}
-                else: city_dict[str(index)] = {"orgnm":w_data[e]["hmcNm"],"orgEmn":examination,
-                                                "orgTlno":None, "orgAddr":w_data[e]["locAddr"]}
-                index = index + 1
-    return city_dict
+
+                if "hmcTelNo" in w_data[e]:
+                    city_list.append({"orgnm": w_data[e]["hmcNm"],
+                                      "orgEmn": examination,
+                                      "orgTlno": w_data[e]["hmcTelNo"],
+                                      "orgAddr": w_data[e]["locAddr"]})
+                else:
+                    city_list.append({"orgnm": w_data[e]["hmcNm"],
+                                      "orgEmn": examination,
+                                      "orgTlno": None,
+                                      "orgAddr": w_data[e]["locAddr"]})
+
+            city_dict = {"result":
+                             {"type": '검진기관',
+                              "list": city_list}
+                         }
+
+            dictToJson = json.dumps(city_dict, ensure_ascii=False)
+
+    return dictToJson
 
 def searchAll():
     key = []

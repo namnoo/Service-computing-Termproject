@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from restapi import restapi_blueprint
+from keys import KAKAO_MAP
 import logging, json
 
 application = Flask(__name__)
@@ -16,6 +17,14 @@ def service():
     )
 
 
+@application.route('/service/map/<name>/<address>')
+def map(name, address):
+
+    return render_template(
+        'map.html', key=KAKAO_MAP, name=name, address=address
+    )
+
+
 @application.route('/')
 def index():
     return render_template(
@@ -28,3 +37,4 @@ if __name__ == '__main__':
 
     application.debug = True
     application.run(host="0.0.0.0", port="8080")
+
