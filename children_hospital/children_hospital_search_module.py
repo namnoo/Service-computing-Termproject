@@ -18,8 +18,8 @@ with open('city_code_children_hospital.txt','r',encoding='utf-8') as f:
 
 
 def stateSearch(st_name):
-    state_dict = {}
-    index = 0
+    state_list = []
+
     url = "https://nip.cdc.go.kr/irapi/rest/getOrgList.do?brtcCd={0}&pageNo={1}&numberOfRows=20&searchTpcd=ADDR&serviceKey={2}".format(state[st_name],1,keys.CHILDREN_HOSPITAL)
     request = re.get(url)
     rescode = request.status_code
@@ -53,15 +53,22 @@ def stateSearch(st_name):
                 w_data = temp
 
             for e in range(len(w_data)):
-                state_dict[str(index)] = {"c_orgnm": w_data[e]["orgnm"], "c_orgAddr": w_data[e]["orgAddr"],
-                                             "c_orgTlno": w_data[e]["orgTlno"]}
-                index = index + 1
+                state_list.append({"c_orgnm": w_data[e]["orgnm"],
+                                   "c_orgAddr": w_data[e]["orgAddr"],
+                                   "c_orgTlno": w_data[e]["orgTlno"]})
+            state_dict = {"result":
+                             {"type": '어린이 예방접종기관',
+                              "list": state_list}
+                         }
+
     return state_dict
 
 index = 0
 def citySearch(st_name,ct_name):
+
     global index
-    city_dict = {}
+    city_list = []
+
     url = "https://nip.cdc.go.kr/irapi/rest/getOrgList.do?brtcCd={0}&sggCd={1}&pageNo={2}&numberOfRows=20&searchTpcd=ADDR&serviceKey={3}".format(
         state[st_name], city[st_name][ct_name], 1, keys.CHILDREN_HOSPITAL)
     request = re.get(url)
@@ -115,10 +122,17 @@ def citySearch(st_name,ct_name):
                 temp.append(w_data)
                 w_data = temp
             for e in range(len(w_data)):
-                city_dict[str(index)] = {"c_orgnm": w_data[e]["orgnm"], "c_orgAddr": w_data[e]["orgAddr"],
-                                         "c_orgTlno": w_data[e]["orgTlno"]}
-                index = index + 1
-    return city_dict
+                city_list.append({"c_orgnm": w_data[e]["orgnm"],
+                                  "c_orgAddr": w_data[e]["orgAddr"],
+                                  "c_orgTlno": w_data[e]["orgTlno"]})
+
+            city_dict = {"result":
+                             {"type": '어린이 예방접종기관',
+                              "list": city_list}
+                         }
+
+            dictToJson = json.dumps(city_dict, ensure_ascii=False)
+    return dictToJson
 
 def searchAll():
     key = []
