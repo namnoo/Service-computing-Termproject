@@ -125,7 +125,7 @@ def search_hostpital_state(st_name): # 시/도 단위 검색
 
 def search_hostpital_city(st_name,ct_name): # 시/구 단위 검색
     hospital = db_session.query(hospitalInfo).filter(
-        hospitalInfo.address.like('%' + st_name + '%' and '%' + ct_name + '%'))
+        hospitalInfo.address.like(st_name + ' ' + ct_name + '%'))
 
     return hospitalInfo.json_all_hospitals(hospital)
 
@@ -136,6 +136,6 @@ def search_clinic_state(st_name): # 시/도 단위 검색
 
 def search_clinic_city(st_name,ct_name): # 시/구 단위 검색
     clinic = db_session.query(clinicInfo).filter(
-        clinicInfo.address.like('%' + st_name + '%' and '%' + ct_name + '%'))
+        clinicInfo.address.like(st_name + ' ' + ct_name + '%'))
 
     return clinicInfo.json_all_clinics(clinic)
