@@ -83,3 +83,31 @@ def documentaion_getHospital():
     return render_template(
         'reference_getHospital.html'
     )
+@restapi_blueprint.route('/reference/getClinicInfo')
+def documentaion_getClinic():
+    return render_template(
+        'reference_getClinicInfo.html'
+    )
+@restapi_blueprint.route('/reference/getExaminationInfo')
+def documentaion_getExamination():
+    return render_template(
+        'reference_getExaminationInfo.html'
+    )
+
+@restapi_blueprint.route('/reference/getChildrenInfo')
+def documentaion_getChildren():
+    return render_template(
+        'reference_getChildrenInfo.html'
+    )
+
+@restapi_blueprint.route('/reference/getPharmacyInfo')
+def documentaion_getPharmacy():
+    return render_template(
+        'reference_getPharmacyInfo.html'
+    )
+
+@restapi_blueprint.route('/reference/getStoreInfo')
+def documentaion_getStore():
+    return render_template(
+        'reference_getStoreInfo.html'
+    )

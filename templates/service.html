@@ -38,7 +38,6 @@ td {
                 <input class="btn btn-success float-right" id="submit" name="submit" type="submit" value="검색"/>
             </div>
         </div>
-
         <!-- 시/도 리스트, 구 리스트 -->
         <div class="row">
             <div class="dropdown col-lg-12 col-md-12 mx-auto">
@@ -95,7 +94,6 @@ td {
                     obj[i].checked = true;
                 }
             }
-
             $("#{{result.sido}}").val("{{result.sido}}").prop("selected", true);
             changeSido();
             $("#{{result.gu}}").val("{{result.gu}}").prop("selected", true);
@@ -196,7 +194,6 @@ td {
                 }
             });
         }
-
         if ('{{result.medical}}' == 'children') {
             $.ajax({
                 type: "GET",
