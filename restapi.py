@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template
+import json
+
+from flask import Blueprint, render_template, make_response, Response
 from hospital_clinic_Info import hospital_clinic_DB
 from medical_examination import medical_examination_search_module
 from children_hospital import children_hospital_search_module
@@ -19,55 +21,55 @@ def restapi_execute():
 @restapi_blueprint.route('/hospital/<sido>/<gu>')
 def restapi_execute_hospital(sido, gu):
     data = hospital_clinic_DB.search_hostpital_city(sido, gu)
+    response = Response(render_template('restapi_json.html', data=data),
+                        content_type="application/json; charset=utf-8")
 
-    return render_template(
-        'restapi_json.html', hospital=data, sido=sido, gu=gu
-    )
+    return response
 
 
 @restapi_blueprint.route('/clinic/<sido>/<gu>')
 def restapi_execute_clinic(sido, gu):
     data = hospital_clinic_DB.search_clinic_city(sido, gu)
+    response = Response(render_template('restapi_json.html', data=data),
+                        content_type="application/json; charset=utf-8")
 
-    return render_template(
-        'restapi_json.html', clinic=data
-    )
+    return response
 
 
 @restapi_blueprint.route('/examination/<sido>/<gu>')
 def restapi_execute_examination(sido, gu):
     data = medical_examination_search_module.citySearch(sido, gu)
+    response = Response(render_template('restapi_json.html', data=data),
+                        content_type="application/json; charset=utf-8")
 
-    return render_template(
-        'restapi_json.html', examination=data
-    )
+    return response
 
 
 @restapi_blueprint.route('/children/<sido>/<gu>')
 def restapi_execute_children(sido, gu):
     data = children_hospital_search_module.citySearch(sido, gu)
+    response = Response(render_template('restapi_json.html', data=data),
+                        content_type="application/json; charset=utf-8")
 
-    return render_template(
-        'restapi_json.html', children=data
-    )
+    return response
 
 
 @restapi_blueprint.route('/pharmacy/<sido>/<gu>')
 def restapi_execute_pharmacy(sido, gu):
     data = pharmacy_store_DB.search_pharmacy_city(sido, gu)
+    response = Response(render_template('restapi_json.html', data=data),
+                        content_type="application/json; charset=utf-8")
 
-    return render_template(
-        'restapi_json.html', pharmacy=data
-    )
+    return response
 
 
 @restapi_blueprint.route('/store/<sido>/<gu>')
 def restapi_execute_store(sido, gu):
     data = pharmacy_store_DB.search_store_city(sido, gu)
+    response = Response(render_template('restapi_json.html', data=data),
+                        content_type="application/json; charset=utf-8")
 
-    return render_template(
-        'restapi_json.html', store=data
-    )
+    return response
 
 
 @restapi_blueprint.route('/reference')

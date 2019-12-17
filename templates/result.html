@@ -82,8 +82,6 @@ font-size: 12px;
         </div>
     </div>
     </form>
-
-    <div id="text"></div>
 </div>
 
 {% endblock %}
@@ -92,7 +90,7 @@ font-size: 12px;
 {% block script %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function () { // 검색 조건 새로운 페이지로 불러오기
         if('{{result}}') {
             var obj = document.getElementsByName("medical");
             for (var i = 0; i < obj.length; i++) {
@@ -109,29 +107,18 @@ font-size: 12px;
         }
     });
 
-    function medical() {
+    function medical() {    // 테이블 생성
         if ('{{result.medical}}' == 'hospital') {
                 $.ajax({
                     type: "GET",
                     url: "/api/hospital/{{result.sido}}/{{result.gu}}",
-                    dataType: "text",
+                    dataType: "json",
                     error: function () {
                         alert("결과가 없습니다");
                     },
                     success: function (text) {
-                        var data = $('#text').html(text);
-
-                        var datatostring = JSON.stringify(data[0].innerText);
-                        var stringtojson = JSON.parse(datatostring);
-
-                        $('#text').remove();
-
-                        if (typeof stringtojson == "string") {
-                            stringtojson = JSON.parse(stringtojson);
-                        }
-
                         var table = '';
-                        $.each(stringtojson.result.list, function (index, value) {
+                        $.each(text.result.list, function (index, value) {
                             table += '<tr>';
                             table += '<td>' + value.hosnm + '</td>';
                             if (value.hosSubj == null) table += '<td>-</td>';
@@ -156,24 +143,13 @@ font-size: 12px;
             $.ajax({
                 type: "GET",
                 url: "/api/clinic/{{result.sido}}/{{result.gu}}",
-                dataType: "text",
+                dataType: "json",
                 error: function () {
                     alert("결과가 없습니다");
                 },
                 success: function (text) {
-                    var data = $('#text').html(text);
-
-                    var datatostring = JSON.stringify(data[0].innerText);
-                    var stringtojson = JSON.parse(datatostring);
-
-                    $('#text').remove();
-
-                    if (typeof stringtojson == "string") {
-                        stringtojson = JSON.parse(stringtojson);
-                    }
-
                     var table = '';
-                    $.each(stringtojson.result.list, function (index, value) {
+                    $.each(text.result.list, function (index, value) {
                         table += '<tr>';
                         table += '<td>' + value.clinm + '</td>';
                         if (value.cliSubj == null) table += '<td>-</td>';
@@ -198,24 +174,13 @@ font-size: 12px;
             $.ajax({
                 type: "GET",
                 url: "/api/examination/{{result.sido}}/{{result.gu}}",
-                dataType: "text",
+                dataType: "json",
                 error: function () {
                     alert("결과가 없습니다");
                 },
                 success: function (text) {
-                    var data = $('#text').html(text);
-
-                    var datatostring = JSON.stringify(data[0].innerText);
-                    var stringtojson = JSON.parse(datatostring);
-
-                    $('#text').remove();
-
-                    if (typeof stringtojson == "string") {
-                        stringtojson = JSON.parse(stringtojson);
-                    }
-
                     var table = '';
-                    $.each(stringtojson.result.list, function (index, value) {
+                    $.each(text.result.list, function (index, value) {
                         table += '<tr>';
                         table += '<td>' + value.orgnm + '</td>';
                         if (value.orgEmn == null) table += '<td>-</td>';
@@ -239,24 +204,13 @@ font-size: 12px;
             $.ajax({
                 type: "GET",
                 url: "/api/children/{{result.sido}}/{{result.gu}}",
-                dataType: "text",
+                dataType: "json",
                 error: function () {
                     alert("결과가 없습니다");
                 },
                 success: function (text) {
-                    var data = $('#text').html(text);
-
-                    var datatostring = JSON.stringify(data[0].innerText);
-                    var stringtojson = JSON.parse(datatostring);
-
-                    $('#text').remove();
-
-                    if (typeof stringtojson == "string") {
-                        stringtojson = JSON.parse(stringtojson);
-                    }
-
                     var table = '';
-                    $.each(stringtojson.result.list, function (index, value) {
+                    $.each(text.result.list, function (index, value) {
                         table += '<tr>';
                         table += '<td>' + value.c_orgnm + '</td>';
                         table += '<td>-</td>';
@@ -279,25 +233,13 @@ font-size: 12px;
             $.ajax({
                 type: "GET",
                 url: "/api/pharmacy/{{result.sido}}/{{result.gu}}",
-                dataType: "text",
-                error: function (e) {
+                dataType: "json",
+                error: function () {
                     alert("결과가 없습니다");
-                    alert(e);
                 },
                 success: function (text) {
-                    var data = $('#text').html(text);
-
-                    var datatostring = JSON.stringify(data[0].innerText);
-                    var stringtojson = JSON.parse(datatostring);
-
-                    $('#text').remove();
-
-                    if (typeof stringtojson == "string") {
-                        stringtojson = JSON.parse(stringtojson);
-                    }
-
                     var table = '';
-                    $.each(stringtojson.result.list, function (index, value) {
+                    $.each(text.result.list, function (index, value) {
                         table += '<tr>';
                         table += '<td>' + value.phanm + '</td>';
                         table += '<td>-</td>';
@@ -320,24 +262,13 @@ font-size: 12px;
             $.ajax({
                 type: "GET",
                 url: "/api/store/{{result.sido}}/{{result.gu}}",
-                dataType: "text",
+                dataType: "json",
                 error: function () {
                     alert("결과가 없습니다");
                 },
                 success: function (text) {
-                    var data = $('#text').html(text);
-
-                    var datatostring = JSON.stringify(data[0].innerText);
-                    var stringtojson = JSON.parse(datatostring);
-
-                    $('#text').remove();
-
-                    if (typeof stringtojson == "string") {
-                        stringtojson = JSON.parse(stringtojson);
-                    }
-
                     var table = '';
-                    $.each(stringtojson.result.list, function (index, value) {
+                    $.each(text.result.list, function (index, value) {
                         table += '<tr>';
                         table += '<td>' + value.stonm + '</td>';
                         table += '<td>' + '</td>';
