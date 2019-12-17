@@ -23,7 +23,7 @@ font-size: 12px;
 
 {% block content %}
 <div class="container">
-    <form action="http://localhost:8080/service" method="POST" name="category">
+    <form action="http://0.0.0.0:8080/service" method="POST" name="category">
     <!-- 체크박스 -->
     <div class="row">
         <div class="media col-lg-12 col-md-12 mx-auto">
@@ -130,7 +130,7 @@ font-size: 12px;
                             if (value.hosAnti == null) table += '<td>-</td>';
                             else table += '<td>' + value.hosAnti + '</td>';
                             if (value.hosAddr == null) table += '<td>-</td>';
-                            else table += '<td>' + '<a href="http://localhost:8080/service/map/'
+                            else table += '<td>' + '<a href="http://0.0.0.0:8080/service/map/'
                                 + value.hosnm + '/' + value.hosAddr + '">이동하기</a>' + '</td>';
                             table += '</tr>';
                         });
@@ -161,7 +161,7 @@ font-size: 12px;
                         if (value.cliAnti == null) table += '<td>-</td>';
                         else table += '<td>' + value.cliAnti + '</td>';
                         if (value.cliAddr == null) table += '<td>-</td>';
-                        else table += '<td>' + '<a href="http://localhost:8080/service/map/'
+                        else table += '<td>' + '<a href="http://0.0.0.0:8080/service/map/'
                             + value.clinm + '/' + value.cliAddr + '">이동하기</a>' + '</td>';
                         table += '</tr>';
                     });
@@ -191,7 +191,7 @@ font-size: 12px;
                         else table += '<td>' + value.orgAddr + '</td>';
                         table += '<td>-</td>';
                         if (value.orgAddr == null) table += '<td>-</td>';
-                        else table += '<td>' + '<a href="http://localhost:8080/service/map/'
+                        else table += '<td>' + '<a href="http://0.0.0.0:8080/service/map/'
                             + value.orgnm + '/' + value.orgAddr + '">이동하기</a>' + '</td>';
                         table += '</tr>';
                     });
@@ -220,7 +220,7 @@ font-size: 12px;
                         else table += '<td>' + value.c_orgAddr + '</td>';
                         table += '<td>-</td>';
                         if (value.c_orgAddr == null) table += '<td>-</td>';
-                        else table += '<td>' + '<a href="http://localhost:8080/service/map/'
+                        else table += '<td>' + '<a href="http://0.0.0.0:8080/service/map/'
                             + value.c_orgnm + '/' + value.c_orgAddr + '">이동하기</a>' + '</td>';
                         table += '</tr>';
                     });
@@ -249,7 +249,7 @@ font-size: 12px;
                         else table += '<td>' + value.phaAddr + '</td>';
                         table += '<td>-</td>';
                         if (value.phaAddr == null) table += '<td>-</td>';
-                        else table += '<td>' + '<a href="http://localhost:8080/service/map/'
+                        else table += '<td>' + '<a href="http://0.0.0.0:8080/service/map/'
                             + value.phanm + '/' + value.phaAddr + '">이동하기</a>' + '</td>';
                         table += '</tr>';
                     });
@@ -278,7 +278,7 @@ font-size: 12px;
                         else table += '<td>' + value.stoAddr + '</td>';
                         table += '<td>-</td>';
                         if (value.stoAddr == null) table += '<td>-</td>';
-                        else table += '<td>' + '<a href="http://localhost:8080/service/map/'
+                        else table += '<td>' + '<a href="http://0.0.0.0:8080/service/map/'
                             + value.stonm + '/' + value.stoAddr + '">이동하기</a>' + '</td>';
                         table += '</tr>';
                     });
