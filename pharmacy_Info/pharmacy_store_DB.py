@@ -99,7 +99,7 @@ def search_pharmacy_state(st_name): # 시/도 단위로 search
 
 def search_pharmacy_city(st_name,ct_name): # 시/구 단위로 search
     pharmacy = db_session.query(pharmacyInfo).filter(
-        pharmacyInfo.address.like('%' + st_name + '%' and '%' + ct_name + '%'))
+        pharmacyInfo.address.like(st_name + ' ' + ct_name + '%'))
 
     return pharmacyInfo.json_all_pharmacies(pharmacy)
 
@@ -110,6 +110,6 @@ def search_store_state(st_name): # 시/도 단위로 search
 
 def search_store_city(st_name, ct_name): # 시/구 단위로 search
     store = db_session.query(storeInfo).filter(
-        storeInfo.address.like('%' + st_name + '%' and '%' + ct_name + '%'))
+        storeInfo.address.like(st_name + ' ' + ct_name + '%'))
 
     return storeInfo.json_all_stores(store)
