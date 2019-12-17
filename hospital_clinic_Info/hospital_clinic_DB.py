@@ -6,10 +6,10 @@ from sqlalchemy.orm import sessionmaker
 import json
 from antibiotics_Info import antibiotics_DB
 
-engine = create_engine('sqlite:///hospital_clinic_Info.db', echo=False, connect_args={'check_same_thread': False})
+engine = create_engine('sqlite:///hospital_clinic_Info.db', echo=False, connect_args={'check_same_thread': False}) #database 생성
 Base = declarative_base()
 
-class hospitalInfo(Base):
+class hospitalInfo(Base): # 병원 table 생성
     __tablename__ = 'hospital'
 
     no = Column(Integer, primary_key=True)
@@ -58,7 +58,7 @@ class hospitalInfo(Base):
         return dictToJson
 
 
-class clinicInfo(Base):
+class clinicInfo(Base): # 의원 table
     __tablename__ = 'clinic'
 
     no = Column(Integer, primary_key=True)
@@ -110,7 +110,6 @@ Base.metadata.create_all(engine)
 
 
 file_name = ['hospital_clinic_Info/hospitalInfo.csv','hospital_clinic_Info/clinicInfo.csv']
-# file_name = ['hospitalInfo.csv','clinicInfo.csv']
 table_name = [hospitalInfo.__tablename__,clinicInfo.__tablename__]
 for i in range(2):
     anti_read = pd.read_csv(file_name[i])
@@ -119,35 +118,24 @@ for i in range(2):
 db_session = sessionmaker(bind=engine)
 db_session = db_session()
 
-#select hospital
 
-def search_hostpital_state(st_name):
+def search_hostpital_state(st_name): # 시/도 단위 검색
     hospital = db_session.query(hospitalInfo).filter(hospitalInfo.address.like('%'+st_name+'%'))
     hospitalInfo.print_all_hospitals(hospital)
 
-def search_hostpital_city(st_name,ct_name):
+def search_hostpital_city(st_name,ct_name): # 시/구 단위 검색
     hospital = db_session.query(hospitalInfo).filter(
         hospitalInfo.address.like('%' + st_name + '%' and '%' + ct_name + '%'))
-    # hospitalInfo.print_all_hospitals(hospital)
 
     return hospitalInfo.json_all_hospitals(hospital)
 
 
-# search_hostpital_state('서울특별시')
-# search_hostpital_city('서울특별시','강남구')
-
-# select clinic
-
-def search_clinic_state(st_name):
+def search_clinic_state(st_name): # 시/도 단위 검색
     clinic = db_session.query(clinicInfo).filter(clinicInfo.address.like('%'+st_name+'%'))
     clinicInfo.print_all_clinics(clinic)
 
-def search_clinic_city(st_name,ct_name):
+def search_clinic_city(st_name,ct_name): # 시/구 단위 검색
     clinic = db_session.query(clinicInfo).filter(
         clinicInfo.address.like('%' + st_name + '%' and '%' + ct_name + '%'))
-    # clinicInfo.print_all_clinics(clinic)
 
     return clinicInfo.json_all_clinics(clinic)
-
-# search_clinic_state('서울특별시')
-# search_clinic_city('서울특별시','강남구')

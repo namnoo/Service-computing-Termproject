@@ -5,10 +5,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import json
 
-engine = create_engine('sqlite:///pharmacy_store_Info.db', echo=False, connect_args={'check_same_thread': False})
+engine = create_engine('sqlite:///pharmacy_store_Info.db', echo=False, connect_args={'check_same_thread': False}) # database 생성
 Base = declarative_base()
 
-class pharmacyInfo(Base):
+class pharmacyInfo(Base): # 약국 table 생성
     __tablename__ = 'pharmacy'
 
     no = Column(Integer, primary_key=True)
@@ -44,7 +44,7 @@ class pharmacyInfo(Base):
 
         return dictToJson
 
-class storeInfo(Base):
+class storeInfo(Base): # 안전 상비 의약품 판매 업소 table 생성
     __tablename__ = 'store'
 
     no = Column(Integer, primary_key=True)
@@ -89,38 +89,27 @@ for i in range(2):
     anti_read = pd.read_csv(file_name[i])
     anti_read.to_sql(con=engine, index_label='no', name=table_name[i], if_exists='replace')
 
-
 db_session = sessionmaker(bind=engine)
 db_session = db_session()
 
-# select pharmacy
 
-def search_pharmacy_state(st_name):
+def search_pharmacy_state(st_name): # 시/도 단위로 search
     pharamacy = db_session.query(pharmacyInfo).filter(pharmacyInfo.address.like('%'+st_name+'%'))
     pharmacyInfo.print_all_pharmacies(pharamacy)
 
-def search_pharmacy_city(st_name,ct_name):
+def search_pharmacy_city(st_name,ct_name): # 시/구 단위로 search
     pharmacy = db_session.query(pharmacyInfo).filter(
         pharmacyInfo.address.like('%' + st_name + '%' and '%' + ct_name + '%'))
-    # pharmacyInfo.print_all_pharmacies(pharmacy)
 
     return pharmacyInfo.json_all_pharmacies(pharmacy)
 
-# search_pharmacy_state('천안시')
-# search_pharmacy_city('천안시','동남구')
 
-# select store
-
-def search_store_state(st_name):
+def search_store_state(st_name): # 시/도 단위로 search
     store = db_session.query(storeInfo).filter(storeInfo.address.like('%'+st_name+'%'))
     storeInfo.print_all_stores(store)
 
-def search_store_city(st_name, ct_name):
+def search_store_city(st_name, ct_name): # 시/구 단위로 search
     store = db_session.query(storeInfo).filter(
         storeInfo.address.like('%' + st_name + '%' and '%' + ct_name + '%'))
-    # storeInfo.print_all_stores(store)
 
     return storeInfo.json_all_stores(store)
-
-# search_store_state('천안시')
-# search_store_city('천안시','동남구')

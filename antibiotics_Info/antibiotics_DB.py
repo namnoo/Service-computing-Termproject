@@ -1,14 +1,13 @@
 import pandas as pd
-from sqlalchemy import Column, Integer, and_
+from sqlalchemy import Column, Integer
 from sqlalchemy import create_engine, Unicode
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-import json
 
-engine = create_engine('sqlite:///antibioticsInfo.db', echo=False, connect_args={'check_same_thread': False})
+engine = create_engine('sqlite:///antibioticsInfo.db', echo=False, connect_args={'check_same_thread': False}) # database 생성
 Base = declarative_base()
 
-class antibioticsInfo(Base):
+class antibioticsInfo(Base): # 항생제 table 생성
     __tablename__ = 'antibiotics'
 
     no = Column(Integer, primary_key=True)
@@ -36,8 +35,6 @@ class antibioticsInfo(Base):
                              "antiAddr" : a.address}
             index += 1
 
-        #json_anti = json.dumps(antibiotics_dict, ensure_ascii=False)
-
         return antibiotics_dict
 
 
@@ -50,21 +47,16 @@ anti_read.to_sql(con=engine, index_label='no', name=antibioticsInfo.__tablename_
 db_session = sessionmaker(bind=engine)
 db_session = db_session()
 
-def search_antibiotics_state(st_name):
+def search_antibiotics_state(st_name): # 시/도 단위로 search
     antibiotics = db_session.query(antibioticsInfo).filter(antibioticsInfo.address.like('%'+st_name+'%'))
     antibioticsInfo.print_all_antibiotics(antibiotics)
 
-def search_antibiotics_city(st_name,ct_name):
+def search_antibiotics_city(st_name,ct_name): # 시/구 단위로 search
     antibiotics = db_session.query(antibioticsInfo).filter(
         antibioticsInfo.address.like('%' + st_name + '%' and '%' + ct_name + '%'))
-    # antibioticsInfo.print_all_antibiotics(antibiotics)
 
     return antibioticsInfo.json_all_antibiotics(antibiotics)
 
-def search_antibiontics_info(name, address):
+def search_antibiontics_info(name, address): # 병원 이름과 주소로 항생제 등급 평가 반환
     for user in db_session.query(antibioticsInfo).filter(antibioticsInfo.hospitalName==name).filter(antibioticsInfo.address==address):
-        # antibioticsInfo.print_antibiotics(user)
         return user.evaluation
-
-# search_antibiotics_state('천안시')
-# search_antibiotics_city('천안시','서북구')

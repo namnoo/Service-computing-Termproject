@@ -4,20 +4,21 @@
 
 {% block content %}
 <div class="container" style="margin-bottom: 30px">
-    <div style="color: #1c7430; font-size: 50px;"><b>getHospitalInfo</b></div>
+    <div style="color: #1c7430; font-size: 50px"><b>getStoreInfo</b></div>
     <hr size="3px" style="margin-bottom: 50px">
     <div style="color: #494f54; font-size: xx-large; margin-bottom:10px"><b>Request</b></div>
     <div style="border: #f3c533 1px; background-color: #c3e6cb; padding: 10px;">
-        <b>GET</b> http://localhost:8080/api/hospital/<b style="color: darkgreen">state_name</b>/<b style="color: darkgreen">city_name</b>
+        <b>GET</b> http://localhost:8080/api/store/<b style="color: darkgreen">state_name</b>/<b style="color: darkgreen">city_name</b>
     </div>
     <hr style="margin-top: 60px">
 </div>
+
 <div class="container">
     <div style="color: #494f54; font-size: xx-large; margin-bottom:10px"><b>Parameters</b></div>
-    <div class="row" style="margin-bottom: 50px;">
+    <div class="row" style="margin-bottom: 50px">
         <div class="answer col-lg-12 col-md-12 mx-auto">
-            <table class="table table-success">
-                <thead class="text-center">
+            <table class="table">
+                <thead class="text-center table-success">
                     <tr>
                         <th scope="col">Parameters</th>
                         <th scope="col">Value</th>
@@ -42,12 +43,12 @@
     <hr>
         <div style="color: #494f54; font-size: xx-large; margin-bottom:10px"><b>Response</b></div>
         <div style="border: #f3c533 1px; background-color: #c3e6cb; padding: 10px; margin-bottom: 20px">
-            <pre>{"result":<br>  {"type": "병원", <br>   "list":<br>      [{"hosnm": "차의과학대학교 강남차병원", <br>        "hosTlno": "02-3468-3000", <br>        "hosAddr": "서울특별시 강남구 논현로 566 (역삼동, 역삼동 606-4)", <br>        "hosType": "종합병원", <br>        "hosSubj": "내과/ 신경과/ 정신건강의학과/ 외과/ 신경외과/ 흉부외과/ 마취통증의학과/ 산부인과/ 소아청소년과/ 비뇨의학과/ 영상의학과/ 병리과/ 진단검사의학과/ 한방내과/ 한방부인과/ 한방소아과/ 한방안·이비인후·피부과/ 한방신경정신과/ 한방재활의학과/ 사상체질과/ 침구과/ 구강악안면외과/ 치과보철과/ 치과교정과/ 통합치의학과", <br>        "hosAnti": "2등급"}]<br>  }<br>}</pre>
+             <pre>{"result":<br>  {"type": "안전상비의약품 판매업소", <br>   "list":<br>       [{"stonm": "씨유 천안병천아우내점", <br>         "stoTlno": "551-7278", <br>         "stoAddr": "충청남도 천안시 동남구 병천면 아우내장터1길 12-23"}]<br>  }<br>}</pre>
         </div>
-        <div class="row" style="margin-bottom: 50px">
+        <div class="row" style="margin-bottom: 50px; margin-bottom:10px">
         <div class="answer col-lg-12 col-md-12 mx-auto">
-            <table class="table table-success">
-                <thead>
+            <table class="table">
+                <thead class="table-success">
                     <tr>
                         <th scope="col">Property name</th>
                         <th scope="col">Value</th>
@@ -56,34 +57,19 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>hosnm</td>
+                        <td>stonm</td>
                         <td>string</td>
-                        <td>hospital name</td>
+                        <td>store name</td>
                     </tr>
                     <tr>
-                        <td>hosTIno</td>
+                        <td>stoTIno</td>
                         <td>string</td>
-                        <td>hospital telephone number</td>
+                        <td>store telephone number</td>
                     </tr>
                     <tr>
-                        <td>hosAddr</td>
+                        <td>stoAddr</td>
                         <td>string</td>
-                        <td>hospital address</td>
-                    </tr>
-                    <tr>
-                        <td>hosType</td>
-                        <td>string</td>
-                        <td>hospital type</td>
-                    </tr>
-                    <tr>
-                        <td>hosSubj</td>
-                        <td>string</td>
-                        <td>hospital subect</td>
-                    </tr>
-                    <tr>
-                        <td>hosAnti</td>
-                        <td>string</td>
-                        <td>hospital's antibiotics usage</td>
+                        <td>store address</td>
                     </tr>
                 </tbody>
             </table>
