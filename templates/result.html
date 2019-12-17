@@ -6,84 +6,88 @@
 
 {% block styleblock %}
 body {
-    font-size: 18px;
+font-size: 18px;
 }
 
 .table {
-    table-layout: fixed;
+table-layout: fixed;
 }
 .table thead th {
-    vertical-align: middle;
+vertical-align: middle;
 }
 td {
-    font-size: 12px;
+font-size: 12px;
 }
 {% endblock %}
 
 
 {% block content %}
 <div class="container">
-    <form action="http://localhost:8080/servlce" method="POST" name="category">
-        <!-- 체크박스 -->
-        <div class="row">
-            <div class="media col-lg-12 col-md-12 mx-auto">
-                <div class="media-body" id="checkbox-container">
-                    <input name="medical" onclick="onClickCheckbox(this);" type="checkbox" value="hospital">병원
-                    <input name="medical" onclick="onClickCheckbox(this);" type="checkbox" value="clinic">의원
-                    <input name="medical" onclick="onClickCheckbox(this);" type="checkbox" value="examination">검진기관
-                    <input name="medical" onclick="onClickCheckbox(this);" type="checkbox" value="children">어린이 예방접종기관
-                    <input name="medical" onclick="onClickCheckbox(this);" type="checkbox" value="pharmacy">약국
-                    <input name="medical" onclick="onClickCheckbox(this);" type="checkbox" value="store">안전상비의약품 판매업소
-                </div>
-                <input class="btn btn-success float-right" id="submit" name="submit" type="submit" value="검색"/>
+    <form action="http://localhost:8080/service" method="POST" name="category">
+    <!-- 체크박스 -->
+    <div class="row">
+        <div class="media col-lg-12 col-md-12 mx-auto">
+            <div class="media-body" id="checkbox-container">
+                <input name="medical" onclick="onClickCheckbox(this);" type="checkbox" value="hospital">병원
+                <input name="medical" onclick="onClickCheckbox(this);" type="checkbox" value="clinic">의원
+                <input name="medical" onclick="onClickCheckbox(this);" type="checkbox" value="examination">검진기관
+                <input name="medical" onclick="onClickCheckbox(this);" type="checkbox" value="children">어린이 예방접종기관
+                <input name="medical" onclick="onClickCheckbox(this);" type="checkbox" value="pharmacy">약국
+                <input name="medical" onclick="onClickCheckbox(this);" type="checkbox" value="store">안전상비의약품 판매업소
             </div>
+            <input class="btn btn-success float-right" id="submit" name="submit" type="submit" value="검색"/>
         </div>
-        <!-- 시/도 리스트, 구 리스트 -->
-        <div class="row">
-            <div class="dropdown col-lg-12 col-md-12 mx-auto">
-                <!-- 1차 분류 -->
-                <select id="sido" name="sido" onchange="changeSido()" style="width:10rem; height:2rem;" >
-                    <option value="" selected disabled>1차 분류</option>
+    </div>
+
+    <!-- 시/도 리스트, 구 리스트 -->
+    <div class="row">
+        <div class="dropdown col-lg-12 col-md-12 mx-auto">
+            <!-- 1차 분류 -->
+            <select id="sido" name="sido" onchange="changeSido()" style="width:10rem; height:2rem;">
+                <option disabled selected value="">1차 분류</option>
                     {% for item in sido %}
                         {% for key, value in item.items() %}
                             <option id="{{key}}" name="sido" value="{{key}}">{{key}}</option>
                         {% endfor %}
                     {% endfor %}
-                </select>
+            </select>
 
-                <!-- 2차 분류 -->
-                <select id="gu" name="gu" style="width:10rem; height:2rem;">
-                    <option value="" selected disabled>2차 분류</option>
-                </select>
-            </div>
+            <!-- 2차 분류 -->
+            <select id="gu" name="gu" style="width:10rem; height:2rem;">
+                <option disabled selected value="">2차 분류</option>
+            </select>
+
         </div>
+    </div>
 
-        <hr>
+    <hr>
 
-        <!-- 결과 화면 -->
-        <div class="row">
-            <div class="answer col-lg-12 col-md-12 mx-auto">
-                <table class="table" id="list_table_json" name="list_table_json">
-                    <thead class="text-center table-success">
-                        <tr>
-                            <th scope="col" width="15%">상호명</th>
-                            <th scope="col" width="15%">과목</th>
-                            <th scope="col" width="15%">전화번호</th>
-                            <th scope="col" width="30%">주소</th>
-                            <th scope="col" width="10%">항생제<br/>등급</th>
-                            <th scope="col" width="10%">지도</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
+    <!-- 결과 화면 -->
+    <div class="row">
+        <div class="answer col-lg-12 col-md-12 mx-auto">
+            <table class="table" id="list_table_json" name="list_table_json">
+                <thead class="text-center table-success">
+                <tr>
+                    <th scope="col" width="15%">상호명</th>
+                    <th scope="col" width="15%">과목</th>
+                    <th scope="col" width="15%">전화번호</th>
+                    <th scope="col" width="30%">주소</th>
+                    <th scope="col" width="10%">항생제<br/>등급</th>
+                    <th scope="col" width="10%">지도</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
+    </div>
     </form>
 
     <div id="text"></div>
 </div>
+
 {% endblock %}
+
 
 {% block script %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -96,6 +100,7 @@ td {
                     obj[i].checked = true;
                 }
             }
+
             $("#{{result.sido}}").val("{{result.sido}}").prop("selected", true);
             changeSido();
             $("#{{result.gu}}").val("{{result.gu}}").prop("selected", true);
@@ -229,6 +234,7 @@ td {
                 }
             });
         }
+
         if ('{{result.medical}}' == 'children') {
             $.ajax({
                 type: "GET",
@@ -239,10 +245,12 @@ td {
                 },
                 success: function (text) {
                     var data = $('#text').html(text);
+
                     var datatostring = JSON.stringify(data[0].innerText);
                     var stringtojson = JSON.parse(datatostring);
 
                     $('#text').remove();
+
                     if (typeof stringtojson == "string") {
                         stringtojson = JSON.parse(stringtojson);
                     }
@@ -349,6 +357,15 @@ td {
         }
     }
 
+    function onClickCheckbox(c) { // checkbox 하나만 선택
+        var obj = document.getElementsByName("medical");
+        for (var i = 0; i < obj.length; i++) {
+            if (obj[i] != c) {
+                obj[i].checked = false;
+            }
+        }
+    }
+
     function changeSido() { // 1차 분류 선택 -> 2차 분류 option 생성
         var s = document.getElementById("sido");
         var selectedSido = s.options[s.selectedIndex].text;
@@ -365,15 +382,6 @@ td {
                 }
             {% endfor %}
         {% endfor %}
-    }
-
-    function onClickCheckbox(c) { // checkbox 하나만 선택
-        var obj = document.getElementsByName("medical");
-        for(var i = 0; i < obj.length; i++) {
-            if(obj[i] != c) {
-                obj[i].checked = false;
-            }
-        }
     }
 </script>
 {% endblock %}

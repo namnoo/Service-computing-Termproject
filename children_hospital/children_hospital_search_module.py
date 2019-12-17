@@ -70,6 +70,7 @@ def citySearch(st_name,ct_name):
     city_list = []
     exceptlist = ['전주시 완산구', '전주시 덕진구', '창원시 성산구', '창원시 의창구', '창원시 마산회원구', '창원시 마산합포구'] # 검색 예외 처리 리스트
 
+
     url = "https://nip.cdc.go.kr/irapi/rest/getOrgList.do?brtcCd={0}&sggCd={1}&pageNo={2}&numberOfRows=20&searchTpcd=ADDR&serviceKey={3}".format(
         state[st_name], city[st_name][ct_name], 1, keys.CHILDREN_HOSPITAL)
     request = re.get(url)
@@ -99,6 +100,7 @@ def citySearch(st_name,ct_name):
         request = re.get(url)
         rescode = request.status_code
         # print(url)
+
         if (rescode == 200):
             responseData = request.text
             rD = xtd.parse(responseData)
@@ -125,6 +127,7 @@ def citySearch(st_name,ct_name):
                 w_data = temp
 
             for e in range(len(w_data)):
+
                 if ct_name in exceptlist: # 시/구 코드가 겹칠경우에
                     for i in range(len(exceptlist)):
                         if ct_name == exceptlist[i]: # 코드값 + 주소 키워드를 사용하여 결과값을 반환
@@ -155,3 +158,4 @@ def searchAll(): # 전국 검색(사용안함)
     for k in key:
         result = stateSearch(str(k))
         return result
+
